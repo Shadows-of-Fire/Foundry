@@ -68,9 +68,11 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 	@Override
 	public void boostBurnTime() {
 		if (!world.isRemote) {
+			int oldBurn = burn_time;
 			burn_time = 200;
 			item_burn_time = 199;
 			update_burn_times = true;
+			if (oldBurn <= 0) ((BlockAlloyFurnace) getBlockType()).setMachineState(world, getPos(), world.getBlockState(getPos()), burn_time > 0);
 			markDirty();
 		}
 	}
@@ -236,8 +238,8 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 	}
 
 	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-		return oldState.getBlock() != newSate.getBlock();
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+		return oldState.getBlock() != newState.getBlock();
 	}
 
 	@Override
