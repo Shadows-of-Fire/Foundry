@@ -1,9 +1,9 @@
 package exter.foundry.fluid;
 
-import exter.foundry.Foundry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import shadows.placebo.Placebo;
 
 public class FluidLiquidMetal extends Fluid {
 
@@ -27,7 +27,7 @@ public class FluidLiquidMetal extends Fluid {
 
 	@Override
 	public String getLocalizedName(FluidStack stack) {
-		return Foundry.proxy.translate(this.getUnlocalizedName(stack) + ".name");
+		return Placebo.PROXY.translate(this.getUnlocalizedName(stack) + ".name");
 	}
 
 	@Override

@@ -181,9 +181,4 @@ public class CommonFoundryProxy implements IGuiHandler {
 	public void preInit() {
 
 	}
-
-	@SuppressWarnings("deprecation")
-	public String translate(String string, Object... args) {
-		return net.minecraft.util.text.translation.I18n.translateToLocalFormatted(string, args);
-	}
 }
