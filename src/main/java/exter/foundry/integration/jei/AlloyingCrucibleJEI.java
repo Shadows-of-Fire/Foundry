@@ -16,6 +16,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.Translator;
@@ -87,9 +88,9 @@ public class AlloyingCrucibleJEI {
 		public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients) {
 			IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-			FluidStack out = ingredients.getOutputs(FluidStack.class).get(0).get(0);
-			List<FluidStack> in_a = ingredients.getInputs(FluidStack.class).get(0);
-			List<FluidStack> in_b = ingredients.getInputs(FluidStack.class).get(1);
+			FluidStack out = ingredients.getOutputs(VanillaTypes.FLUID).get(0).get(0);
+			List<FluidStack> in_a = ingredients.getInputs(VanillaTypes.FLUID).get(0);
+			List<FluidStack> in_b = ingredients.getInputs(VanillaTypes.FLUID).get(1);
 
 			int amount = Integer.max(out.amount, Integer.max(in_a.get(0).amount, in_b.get(0).amount));
 
@@ -122,8 +123,8 @@ public class AlloyingCrucibleJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setOutput(FluidStack.class, recipe.getOutput());
-			ingredients.setInputs(FluidStack.class, ImmutableList.of(recipe.getInputA(), recipe.getInputB()));
+			ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
+			ingredients.setInputs(VanillaTypes.FLUID, ImmutableList.of(recipe.getInputA(), recipe.getInputB()));
 		}
 
 		@Override

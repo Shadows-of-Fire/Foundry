@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.12.2-3.2.0"
+version = "1.12.2-3.3.0"
 group = "exter.foundry"
 archivesBaseName = "Foundry"
 
@@ -34,7 +34,7 @@ repositories {
 		url 'http://maven.blamejared.com'
 	}
 	maven {
-        url 'http://maven.tterrag.com/'
+        url 'http://maven2.tterrag.com/'
     }
 }
 

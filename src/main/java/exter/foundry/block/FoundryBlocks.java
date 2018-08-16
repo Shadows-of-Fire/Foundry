@@ -5,7 +5,6 @@ import exter.foundry.config.FoundryConfig;
 import exter.foundry.item.ItemBlockMulti;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.common.config.Configuration;
 
 public class FoundryBlocks {
 	static public BlockComponent block_component;
@@ -31,7 +30,7 @@ public class FoundryBlocks {
 		FoundryRegistry.ITEMS.add(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 
-	static public void registerBlocks(Configuration config) {
+	static public void registerBlocks() {
 		block_component = new BlockComponent();
 		block_refractory_glass = new BlockRefractoryGlass();
 		block_machine = new BlockFoundryMachine();

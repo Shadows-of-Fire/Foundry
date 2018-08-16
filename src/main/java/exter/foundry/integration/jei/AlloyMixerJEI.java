@@ -14,6 +14,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.Translator;
@@ -85,8 +86,8 @@ public class AlloyMixerJEI {
 		public void setRecipe(IRecipeLayout recipeLayout, Wrapper recipeWrapper, IIngredients ingredients) {
 			IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-			List<List<FluidStack>> in = ingredients.getInputs(FluidStack.class);
-			FluidStack out = ingredients.getOutputs(FluidStack.class).get(0).get(0);
+			List<List<FluidStack>> in = ingredients.getInputs(VanillaTypes.FLUID);
+			FluidStack out = ingredients.getOutputs(VanillaTypes.FLUID).get(0).get(0);
 			int out_amount = out.amount;
 			for (int i = 0; i < in.size(); i++) {
 				int amount = in.get(i).get(0).amount;
@@ -100,7 +101,7 @@ public class AlloyMixerJEI {
 				guiFluidStacks.init(i, true, 8 + 21 * i, 1, 16, GuiAlloyMixer.TANK_HEIGHT, out_amount, false, tank_overlay);
 				guiFluidStacks.set(i, in.get(i));
 			}
-			guiFluidStacks.set(5, ingredients.getOutputs(FluidStack.class).get(0));
+			guiFluidStacks.set(5, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
 		}
 	}
 
@@ -123,8 +124,8 @@ public class AlloyMixerJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputs(FluidStack.class, recipe.getInputs());
-			ingredients.setOutput(FluidStack.class, recipe.getOutput());
+			ingredients.setInputs(VanillaTypes.FLUID, recipe.getInputs());
+			ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
 		}
 
 		@Override

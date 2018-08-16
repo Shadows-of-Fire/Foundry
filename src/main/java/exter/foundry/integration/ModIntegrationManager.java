@@ -2,69 +2,42 @@ package exter.foundry.integration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-import exter.foundry.Foundry;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import exter.foundry.config.FoundryConfig;
+import net.minecraftforge.fml.common.Loader;
 
 public final class ModIntegrationManager {
-	private static List<IModIntegration> integrations = new ArrayList<>();
 
-	static public void finalStep() {
-		Foundry.LOGGER.info("Integration Final Step");
-		for (IModIntegration m : integrations) {
-			m.onAfterPostInit();
-		}
+	public static final String BOTANIA = "botania";
+	public static final String ENDERIO = "enderio";
+	public static final String TCONSTRUCT = "tconstruct";
+	public static final String CRAFTTWEAKER = "crafttweaker";
+
+	private static final List<IModIntegration> INTEGRATIONS = new ArrayList<>();
+
+	public static void register(IModIntegration integration) {
+		String modid = integration.getModID();
+		if (FoundryConfig.config.getBoolean("Integration: " + modid, "Integrations", true, "Toggle for integration with " + modid)) INTEGRATIONS.add(integration);
 	}
 
-	@SideOnly(Side.CLIENT)
-	static public void clientInit() {
-		for (IModIntegration m : integrations) {
-			m.onClientInit();
-		}
+	/**
+	 * Applies an action to each integration.
+	 * @param action The action to perform.
+	 */
+	public static void apply(Consumer<IModIntegration> action) {
+		INTEGRATIONS.forEach(action);
 	}
 
-	@SideOnly(Side.CLIENT)
-	static public void clientPostInit() {
-		for (IModIntegration m : integrations) {
-			m.onClientPostInit();
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	static public void clientPreInit() {
-		for (IModIntegration m : integrations) {
-			m.onClientPreInit();
-		}
-	}
-
-	static public void init() {
-		Foundry.LOGGER.info("Integration Init");
-		for (IModIntegration m : integrations) {
-			m.onInit();
-		}
-	}
-
-	static public void postInit() {
-		Foundry.LOGGER.info("Integration Post Init");
-		for (IModIntegration m : integrations) {
-			m.onPostInit();
-		}
-	}
-
-	static public void preInit(Configuration config) {
-		Foundry.LOGGER.info("Integration Pre Init");
-		for (IModIntegration m : integrations) {
-			m.onPreInit(config);
-		}
-	}
-
-	static public void registerIntegration(Configuration config, IModIntegration imod) {
-		String name = imod.getName();
-		if (config.getBoolean("enable", "integration." + name, true, "Enable/disable mod integration.")) {
-			integrations.add(imod);
-		}
+	/**
+	 * Registers the default integrations.
+	 */
+	public static void registerDefaults() {
+		ModIntegrationManager.register(new ModIntegrationMolten());
+		if (Loader.isModLoaded(BOTANIA)) ModIntegrationManager.register(new ModIntegrationBotania());
+		//if (Loader.isModLoaded(ENDERIO)) ModIntegrationManager.register(new ModIntegrationEnderIO()); Disabled for now.
+		if (Loader.isModLoaded(TCONSTRUCT)) ModIntegrationManager.register(new ModIntegrationTiCon());
+		if (Loader.isModLoaded(CRAFTTWEAKER)) ModIntegrationManager.register(new ModIntegrationMinetweaker()); //Has to go last.
 	}
 
 }

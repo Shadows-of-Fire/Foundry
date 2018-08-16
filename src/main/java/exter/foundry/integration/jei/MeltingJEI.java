@@ -20,14 +20,13 @@ import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.gui.elements.DrawableResource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 
 public class MeltingJEI {
 
@@ -101,8 +100,8 @@ public class MeltingJEI {
 
 			guiItemStacks.init(0, true, 24, 6);
 			guiFluidStacks.init(1, false, 77, 6, 16, GuiMeltingCrucible.TANK_HEIGHT, FoundryAPI.CRUCIBLE_TANK_CAPACITY, false, tank_overlay);
-			guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
-			guiFluidStacks.set(1, ingredients.getOutputs(FluidStack.class).get(0));
+			guiItemStacks.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
+			guiFluidStacks.set(1, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
 		}
 	}
 
@@ -135,8 +134,8 @@ public class MeltingJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(ItemStack.class, Collections.singletonList(recipe.getInput().getItems()));
-			ingredients.setOutput(FluidStack.class, recipe.getOutput());
+			ingredients.setInputLists(VanillaTypes.ITEM, Collections.singletonList(recipe.getInput().getItems()));
+			ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
 		}
 
 		@Override

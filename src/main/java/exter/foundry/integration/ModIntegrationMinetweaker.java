@@ -17,9 +17,6 @@ import exter.foundry.integration.minetweaker.MTInfuserHandler;
 import exter.foundry.integration.minetweaker.MTMeltingHandler;
 import exter.foundry.integration.minetweaker.MTMoldStationHandler;
 import exter.foundry.integration.minetweaker.orestack.OreStackBracketHandler;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModIntegrationMinetweaker implements IModIntegration {
 
@@ -28,50 +25,12 @@ public class ModIntegrationMinetweaker implements IModIntegration {
 	private static List<Runnable> clearQueue = new ArrayList<>();
 
 	@Override
-	public String getName() {
-		return CraftTweaker.NAME;
+	public String getModID() {
+		return CraftTweaker.MODID;
 	}
 
 	@Override
-	public void onAfterPostInit() {
-		for (Runnable r : clearQueue)
-			r.run();
-		for (Runnable r : removeQueue)
-			r.run();
-		for (Runnable r : addQueue)
-			r.run();
-		addQueue = removeQueue = clearQueue = null;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onClientInit() {
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onClientPostInit() {
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onClientPreInit() {
-
-	}
-
-	@Override
-	public void onInit() {
-	}
-
-	@Override
-	public void onPostInit() {
-
-	}
-
-	@Override
-	public void onPreInit(Configuration config) {
+	public void preInit() {
 		CraftTweakerAPI.registerBracketHandler(new OreStackBracketHandler());
 		CraftTweakerAPI.registerClass(MTMeltingHandler.class);
 		CraftTweakerAPI.registerClass(MTCastingHandler.class);
@@ -83,6 +42,17 @@ public class ModIntegrationMinetweaker implements IModIntegration {
 		CraftTweakerAPI.registerClass(MTInfuserHandler.class);
 		CraftTweakerAPI.registerClass(MTMoldStationHandler.class);
 		CraftTweakerAPI.registerClass(MTBurnerFuelHandler.class);
+	}
+
+	@Override
+	public void postInit() {
+		for (Runnable r : clearQueue)
+			r.run();
+		for (Runnable r : removeQueue)
+			r.run();
+		for (Runnable r : addQueue)
+			r.run();
+		addQueue = removeQueue = clearQueue = null;
 	}
 
 	public static void queueAdd(Runnable action) {

@@ -21,13 +21,13 @@ import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
 
 public class CastingJEI {
 
@@ -104,10 +104,10 @@ public class CastingJEI {
 			gui_items.init(1, true, 27, 4);
 			gui_items.init(2, true, 47, 4);
 			gui_fluids.init(3, true, 1, 5, 16, GuiMetalCaster.TANK_HEIGHT, FoundryAPI.CASTER_TANK_CAPACITY, false, tank_overlay);
-			gui_items.set(0, ingredients.getOutputs(ItemStack.class).get(0));
-			gui_items.set(1, ingredients.getInputs(ItemStack.class).get(0));
-			gui_items.set(2, ingredients.getInputs(ItemStack.class).get(1));
-			gui_fluids.set(3, ingredients.getInputs(FluidStack.class).get(0));
+			gui_items.set(0, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
+			gui_items.set(1, ingredients.getInputs(VanillaTypes.ITEM).get(0));
+			gui_items.set(2, ingredients.getInputs(VanillaTypes.ITEM).get(1));
+			gui_fluids.set(3, ingredients.getInputs(VanillaTypes.FLUID).get(0));
 		}
 	}
 
@@ -133,9 +133,9 @@ public class CastingJEI {
 		public void getIngredients(IIngredients ingredients) {
 			IItemMatcher extra = recipe.getInputExtra();
 			List<ItemStack> extra_items = extra != null ? extra.getItems() : Collections.<ItemStack>emptyList();
-			ingredients.setInputs(FluidStack.class, Collections.singletonList(recipe.getInput()));
-			ingredients.setInputLists(ItemStack.class, ImmutableList.of(Collections.singletonList(recipe.getMold()), extra_items));
-			ingredients.setOutput(ItemStack.class, recipe.getOutput());
+			ingredients.setInputs(VanillaTypes.FLUID, Collections.singletonList(recipe.getInput()));
+			ingredients.setInputLists(VanillaTypes.ITEM, ImmutableList.of(Collections.singletonList(recipe.getMold()), extra_items));
+			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 		}
 
 		@Override

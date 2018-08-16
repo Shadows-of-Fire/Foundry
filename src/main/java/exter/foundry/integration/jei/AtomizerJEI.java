@@ -20,11 +20,11 @@ import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -102,9 +102,9 @@ public class AtomizerJEI {
 			guiItemStacks.init(0, false, 77, 17);
 			guiFluidStacks.init(1, true, 31, 2, 16, GuiMetalAtomizer.TANK_HEIGHT, FoundryAPI.ATOMIZER_TANK_CAPACITY, false, tank_overlay);
 			guiFluidStacks.init(2, true, 115, 2, 16, GuiMetalAtomizer.TANK_HEIGHT, FoundryAPI.ATOMIZER_TANK_CAPACITY, false, tank_overlay);
-			guiItemStacks.set(0, ingredients.getOutputs(ItemStack.class).get(0));
-			guiFluidStacks.set(1, ingredients.getInputs(FluidStack.class).get(0));
-			guiFluidStacks.set(2, ingredients.getInputs(FluidStack.class).get(1));
+			guiItemStacks.set(0, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
+			guiFluidStacks.set(1, ingredients.getInputs(VanillaTypes.FLUID).get(0));
+			guiFluidStacks.set(2, ingredients.getInputs(VanillaTypes.FLUID).get(1));
 		}
 	}
 
@@ -130,8 +130,8 @@ public class AtomizerJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputs(FluidStack.class, ImmutableList.of(recipe.getInput(), WATER));
-			ingredients.setOutput(ItemStack.class, recipe.getOutput());
+			ingredients.setInputs(VanillaTypes.FLUID, ImmutableList.of(recipe.getInput(), WATER));
+			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 		}
 
 		@Override

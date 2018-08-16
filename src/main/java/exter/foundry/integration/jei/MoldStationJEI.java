@@ -16,12 +16,12 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.gui.elements.DrawableResource;
 import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class MoldStationJEI {
@@ -96,7 +96,7 @@ public class MoldStationJEI {
 			IGuiItemStackGroup gui_items = recipeLayout.getItemStacks();
 
 			gui_items.init(0, false, 110, 23);
-			gui_items.set(0, ingredients.getOutputs(ItemStack.class).get(0));
+			gui_items.set(0, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
 		}
 	}
 
@@ -142,7 +142,7 @@ public class MoldStationJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setOutput(ItemStack.class, recipe.getOutput());
+			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 		}
 
 		@Override

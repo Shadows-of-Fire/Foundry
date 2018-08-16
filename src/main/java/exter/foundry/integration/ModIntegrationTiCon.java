@@ -1,9 +1,10 @@
 package exter.foundry.integration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
@@ -17,11 +18,8 @@ import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
@@ -30,8 +28,6 @@ import slimeknights.tconstruct.library.smeltery.ICastingRecipe;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
 public class ModIntegrationTiCon implements IModIntegration {
-
-	public static final String TIC = "tconstruct";
 
 	static private final int TICON_INGOT_AMOUNT = 144;
 	static private final int INGOT_GCD = gcd(TICON_INGOT_AMOUNT, FoundryAPI.FLUID_AMOUNT_INGOT);
@@ -45,9 +41,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 		return a;
 	}
 
-	private Map<String, String> liquid_map;
-
-	private Map<String, String> reverse_liquid_map;
+	private static final BiMap<String, String> LIQUID_MAP = HashBiMap.create();
 
 	private void createAlloyRecipe(AlloyRecipe mix) {
 		if (mix.getFluids().size() > 4) { return; }
@@ -74,7 +68,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 		}
 
 		FluidStack ing = mix.getFluids().get(index);
-		String mapped = liquid_map.get(ing.getFluid().getName());
+		String mapped = LIQUID_MAP.get(ing.getFluid().getName());
 		if (mapped != null) {
 			List<FluidStack> in = new ArrayList<>(inputs);
 			in.add(new FluidStack( // Convert TiCon Fluid Stack to Foundry Fluid Stack
@@ -88,33 +82,27 @@ public class ModIntegrationTiCon implements IModIntegration {
 	}
 
 	@Override
-	public String getName() {
-		return TConstruct.modName;
+	public String getModID() {
+		return TConstruct.modID;
 	}
 
 	@Override
-	public void onAfterPostInit() {
-		liquid_map = new HashMap<>();
+	public void postInit() {
 		for (String name : LiquidMetalRegistry.INSTANCE.getFluidNames()) {
 			if (name.equals("Glass")) {
 				if (FoundryConfig.recipe_glass) {
 					if (FluidRegistry.getFluid("glass") != null) {
-						liquid_map.put("glass", "Glass");
+						LIQUID_MAP.put("glass", "Glass");
 					}
 				}
 			} else if (!name.startsWith("Glass") && !LiquidMetalRegistry.INSTANCE.getFluid(name).special) {
 				String tic_name = name.toLowerCase();
 				if (FluidRegistry.getFluid(tic_name) != null) {
-					liquid_map.put(tic_name, name);
+					LIQUID_MAP.put(tic_name, name);
 				}
 			}
 		}
-		liquid_map.put("constantan", "Cupronickel");
-
-		reverse_liquid_map = new HashMap<>();
-		for (Map.Entry<String, String> e : liquid_map.entrySet()) {
-			reverse_liquid_map.put(LiquidMetalRegistry.INSTANCE.getFluid(e.getValue()).getName(), e.getKey());
-		}
+		LIQUID_MAP.put("constantan", "Cupronickel");
 
 		//Convert TiCon Smeltery recipes to Foundry ICF melting recipes (except those that have an existing recipe).
 		for (MeltingRecipe recipe : TinkerRegistry.getAllMeltingRecipies()) {
@@ -122,7 +110,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 			for (ItemStack stack : recipe.input.getInputs()) {
 				if (!stack.isEmpty() && MeltingRecipeManager.INSTANCE.findRecipe(stack) == null) {
 					FluidStack result = recipe.output;
-					String mapped = liquid_map.get(result.getFluid().getName());
+					String mapped = LIQUID_MAP.get(result.getFluid().getName());
 					if (mapped != null) {
 						FluidStack mapped_liquid;
 
@@ -149,7 +137,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 
 		//Convert TiCon Alloy recipes Foundry Alloy Mixer recipes.
 		for (AlloyRecipe mix : TinkerRegistry.getAlloys()) {
-			String mapped_result = liquid_map.get(mix.getResult().getFluid().getName());
+			String mapped_result = LIQUID_MAP.get(mix.getResult().getFluid().getName());
 			if (mapped_result == null) {
 				createAlloyRecipe(mix);
 			}
@@ -161,7 +149,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 				if (icasting instanceof CastingRecipe) {
 					CastingRecipe casting = (CastingRecipe) icasting;
 					if (casting.cast != null && !casting.consumesCast() && !casting.getResult().isEmpty()) {
-						String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
+						String mapped = LIQUID_MAP.get(casting.getFluid().getFluid().getName());
 						FluidStack mapped_liquid = null;
 						if (mapped != null) {
 							mapped_liquid = new FluidStack(LiquidMetalRegistry.INSTANCE.getFluid(mapped), FoundryMiscUtils.divCeil(casting.getFluid().amount * FoundryAPI.FLUID_AMOUNT_INGOT, TICON_INGOT_AMOUNT));
@@ -208,7 +196,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 				if (casting.getResult().isEmpty()) {
 					continue;
 				}
-				String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
+				String mapped = LIQUID_MAP.get(casting.getFluid().getFluid().getName());
 				if (mapped == null) {
 					continue;
 				}
@@ -232,7 +220,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 					continue;
 				}
 				if (casting.getResult().isEmpty()) { return; }
-				String mapped = liquid_map.get(casting.getFluid().getFluid().getName());
+				String mapped = LIQUID_MAP.get(casting.getFluid().getFluid().getName());
 				if (mapped == null) {
 					continue;
 				}
@@ -245,38 +233,5 @@ public class ModIntegrationTiCon implements IModIntegration {
 		for (CastingRecipe r : recipes) {
 			TinkerRegistry.registerBasinCasting(r);
 		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onClientInit() {
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onClientPostInit() {
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onClientPreInit() {
-
-	}
-
-	@Override
-	public void onInit() {
-
-	}
-
-	@Override
-	public void onPostInit() {
-
-	}
-
-	@Override
-	public void onPreInit(Configuration config) {
-
 	}
 }

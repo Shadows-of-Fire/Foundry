@@ -17,12 +17,7 @@ import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.init.InitRecipes;
-import exter.foundry.integration.ModIntegrationBotania;
-import exter.foundry.integration.ModIntegrationEnderIO;
 import exter.foundry.integration.ModIntegrationManager;
-import exter.foundry.integration.ModIntegrationMinetweaker;
-import exter.foundry.integration.ModIntegrationMolten;
-import exter.foundry.integration.ModIntegrationTiCon;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.network.MessageTileEntitySync;
@@ -69,7 +64,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -89,7 +83,7 @@ import shadows.placebo.util.RecipeHelper;
 public class Foundry {
 	public static final String MODID = "foundry";
 	public static final String MODNAME = "Foundry";
-	public static final String MODVERSION = "3.2.0";
+	public static final String MODVERSION = "3.3.0";
 
 	@SidedProxy(clientSide = "exter.foundry.proxy.ClientFoundryProxy", serverSide = "exter.foundry.proxy.CommonFoundryProxy")
 	public static CommonFoundryProxy proxy;
@@ -110,8 +104,55 @@ public class Foundry {
 	}
 
 	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(new FoundryRegistry());
+		FoundryConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
+
+		ModIntegrationManager.registerDefaults();
+
+		FoundryAPI.FLUIDS = LiquidMetalRegistry.INSTANCE;
+
+		FoundryAPI.MELTING_MANAGER = MeltingRecipeManager.INSTANCE;
+		FoundryAPI.CASTING_MANAGER = CastingRecipeManager.INSTANCE;
+		FoundryAPI.CASTING_TABLE_MANAGER = CastingTableRecipeManager.INSTANCE;
+		FoundryAPI.ALLOY_MIXER_MANAGER = AlloyMixerRecipeManager.INSTANCE;
+		FoundryAPI.INFUSER_MANAGER = InfuserRecipeManager.INSTANCE;
+		FoundryAPI.ALLOY_FURNACE_MANAGER = AlloyFurnaceRecipeManager.INSTANCE;
+		FoundryAPI.ATOMIZER_MANAGER = AtomizerRecipeManager.INSTANCE;
+		FoundryAPI.MOLD_MANAGER = MoldRecipeManager.INSTANCE;
+		FoundryAPI.ALLOYING_CRUCIBLE_MANAGER = AlloyingCrucibleRecipeManager.INSTANCE;
+
+		FoundryAPI.MATERIALS = MaterialRegistry.INSTANCE;
+		FoundryAPI.BURNER_HEATER_FUEL = BurnerHeaterFuelManager.INSTANCE;
+
+		CapabilityHeatProvider.init();
+		CapabilityFirearmRound.init();
+		FoundrySounds.init();
+
+		FoundryItems.registerItems();
+		FoundryBlocks.registerBlocks();
+
+		FoundryFluids.init();
+
+		NETWORK.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.SERVER);
+		NETWORK.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.CLIENT);
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
+
+		try {
+			File f = new File(WorldProps.worldGenDir, "04_foundry_aluminium.json");
+			if (f.createNewFile()) Utils.copyFileUsingStream("assets/foundry/world/04_foundry_aluminium.json", f);
+		} catch (IOException e) {
+			LOGGER.error("Failed to copy foundry aluminium generation file!");
+			e.printStackTrace();
+		}
+
+		ModIntegrationManager.apply(m -> m.preInit());
+		proxy.preInit();
+	}
+
+	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		ModIntegrationManager.init();
 		InitRecipes.init();
 
 		GameRegistry.registerTileEntity(TileEntityMeltingCrucibleBasic.class, reloc("melt_crucible_basic"));
@@ -144,74 +185,19 @@ public class Foundry {
 
 		EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS).toArray(new Biome[0]));
 
+		ModIntegrationManager.apply(m -> m.init());
 		proxy.init();
-	}
-
-	private static ResourceLocation reloc(String s) {
-		return new ResourceLocation(MODID, s);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		ModIntegrationManager.postInit();
+		ModIntegrationManager.apply(m -> m.postInitEarly());
 		InitRecipes.postInit();
 		proxy.postInit();
-		ModIntegrationManager.finalStep();
+		ModIntegrationManager.apply(m -> m.postInit());
 	}
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(new FoundryRegistry());
-		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-		config.load();
-
-		ModIntegrationManager.registerIntegration(config, new ModIntegrationMolten());
-		if (Loader.isModLoaded("tconstruct")) ModIntegrationManager.registerIntegration(config, new ModIntegrationTiCon());
-		if (Loader.isModLoaded("enderio")) ModIntegrationManager.registerIntegration(config, new ModIntegrationEnderIO());
-		if (Loader.isModLoaded("botania")) ModIntegrationManager.registerIntegration(config, new ModIntegrationBotania());
-		if (Loader.isModLoaded("crafttweaker")) ModIntegrationManager.registerIntegration(config, new ModIntegrationMinetweaker());
-
-		FoundryAPI.FLUIDS = LiquidMetalRegistry.INSTANCE;
-
-		FoundryAPI.MELTING_MANAGER = MeltingRecipeManager.INSTANCE;
-		FoundryAPI.CASTING_MANAGER = CastingRecipeManager.INSTANCE;
-		FoundryAPI.CASTING_TABLE_MANAGER = CastingTableRecipeManager.INSTANCE;
-		FoundryAPI.ALLOY_MIXER_MANAGER = AlloyMixerRecipeManager.INSTANCE;
-		FoundryAPI.INFUSER_MANAGER = InfuserRecipeManager.INSTANCE;
-		FoundryAPI.ALLOY_FURNACE_MANAGER = AlloyFurnaceRecipeManager.INSTANCE;
-		FoundryAPI.ATOMIZER_MANAGER = AtomizerRecipeManager.INSTANCE;
-		FoundryAPI.MOLD_MANAGER = MoldRecipeManager.INSTANCE;
-		FoundryAPI.ALLOYING_CRUCIBLE_MANAGER = AlloyingCrucibleRecipeManager.INSTANCE;
-
-		FoundryAPI.MATERIALS = MaterialRegistry.INSTANCE;
-		FoundryAPI.BURNER_HEATER_FUEL = BurnerHeaterFuelManager.INSTANCE;
-
-		CapabilityHeatProvider.init();
-		CapabilityFirearmRound.init();
-		FoundrySounds.init();
-
-		FoundryConfig.load(config);
-		FoundryItems.registerItems(config);
-		FoundryBlocks.registerBlocks(config);
-
-		FoundryFluids.init();
-
-		ModIntegrationManager.preInit(config);
-
-		config.save();
-
-		NETWORK.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.SERVER);
-		NETWORK.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.CLIENT);
-
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
-		proxy.preInit();
-
-		try {
-			File f = new File(WorldProps.worldGenDir, "04_foundry_aluminium.json");
-			if (f.createNewFile()) Utils.copyFileUsingStream("assets/foundry/world/04_foundry_aluminium.json", f);
-		} catch (IOException e) {
-			LOGGER.error("Failed to copy foundry aluminium generation file!");
-			e.printStackTrace();
-		}
+	private static ResourceLocation reloc(String s) {
+		return new ResourceLocation(MODID, s);
 	}
 }

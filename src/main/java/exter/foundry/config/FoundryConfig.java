@@ -10,6 +10,8 @@ import net.minecraftforge.common.config.Configuration;
 
 public class FoundryConfig {
 
+	public static Configuration config;
+
 	public static boolean debug = false;
 
 	public static boolean recipe_steel = true;
@@ -30,6 +32,7 @@ public class FoundryConfig {
 	public static String prefModID = ThermalFoundation.MOD_ID;
 
 	static public void load(Configuration config) {
+		FoundryConfig.config = config;
 
 		debug = config.getBoolean("debug", "debug", false, "Enable debug logging.");
 		recipe_equipment = config.getBoolean("equipment", "recipes", recipe_equipment, "Enable/disable casting recipes for equipment");
@@ -60,5 +63,7 @@ public class FoundryConfig {
 
 		FoundryAPI.FLUID_AMOUNT_INGOT = config.getInt("Fluid Ingot Value", "general", FoundryAPI.FLUID_AMOUNT_INGOT, 36, Integer.MAX_VALUE, "The value, in mB, of an ingot.");
 		FoundryAPI.FLUID_AMOUNT_ORE = config.getInt("Fluid Ore Value", "general", FoundryAPI.FLUID_AMOUNT_ORE, 1, Integer.MAX_VALUE, "The value, in mB, of an ore.  Set to 0 to use default values.");
+
+		if (config.hasChanged()) config.save();
 	}
 }

@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
 import exter.foundry.block.BlockAlloyFurnace;
+import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.tileentity.itemhandler.ItemHandlerFuel;
 import net.minecraft.block.state.IBlockState;
@@ -21,9 +22,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import vazkii.botania.api.item.IExoflameHeatable;
 
-@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "botania")
+@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = ModIntegrationManager.BOTANIA)
 public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedInventory, IExoflameHeatable {
 	public static final int SLOT_INPUT_A = 0;
 	public static final int SLOT_INPUT_B = 1;
@@ -63,7 +65,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 		item_handler_fuel = new ItemHandlerFuel(this, getSizeInventory(), IH_SLOTS_INPUT_FUEL, IH_SLOTS_OUTPUT_FUEL, IH_SLOTS_FUEL);
 	}
 
-	@Optional.Method(modid = "Botania")
 	@Override
 	public void boostBurnTime() {
 		if (!world.isRemote) {
@@ -74,10 +75,26 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 		}
 	}
 
-	@Optional.Method(modid = "Botania")
 	@Override
 	public void boostCookTime() {
+		progress += 3;
+		markDirty();
+	}
 
+	@Override
+	public boolean canSmelt() {
+		IAlloyFurnaceRecipe recipe = null;
+		if (!getStackInSlot(SLOT_INPUT_A).isEmpty() && !getStackInSlot(SLOT_INPUT_B).isEmpty()) {
+			recipe = AlloyFurnaceRecipeManager.INSTANCE.findRecipe(getStackInSlot(SLOT_INPUT_A), getStackInSlot(SLOT_INPUT_B));
+			if (recipe == null) recipe = AlloyFurnaceRecipeManager.INSTANCE.findRecipe(getStackInSlot(SLOT_INPUT_B), getStackInSlot(SLOT_INPUT_A));
+		}
+		ItemStack output = getStackInSlot(SLOT_OUTPUT);
+		return recipe != null && (output.isEmpty() || (ItemHandlerHelper.canItemStacksStack(output, recipe.getOutput()) && output.getCount() + recipe.getOutput().getCount() <= output.getMaxStackSize()));
+	}
+
+	@Override
+	public int getBurnTime() {
+		return burn_time <= 1 ? 0 : burn_time - 1;
 	}
 
 	@Deprecated
@@ -93,26 +110,8 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 	}
 
 	private boolean canOutput(IAlloyFurnaceRecipe recipe) {
-		ItemStack output = recipe.getOutput();
-		ItemStack inv_output = getStackInSlot(SLOT_OUTPUT);
-		return inv_output.isEmpty() || (inv_output.isItemEqual(output) && inv_output.getCount() - output.getCount() <= inv_output.getMaxStackSize());
-	}
-
-	@Optional.Method(modid = "Botania")
-	@Override
-	public boolean canSmelt() {
-		if (!getStackInSlot(SLOT_INPUT_A).isEmpty() && getStackInSlot(SLOT_INPUT_B).isEmpty()) {
-			IAlloyFurnaceRecipe recipe = AlloyFurnaceRecipeManager.INSTANCE.findRecipe(getStackInSlot(SLOT_INPUT_A), getStackInSlot(SLOT_INPUT_B));
-			if (recipe == null) {
-				recipe = AlloyFurnaceRecipeManager.INSTANCE.findRecipe(getStackInSlot(SLOT_INPUT_B), getStackInSlot(SLOT_INPUT_A));
-			}
-			if (recipe == null) { return false; }
-			ItemStack output = recipe.getOutput();
-			ItemStack inv_output = inventory.get(SLOT_OUTPUT);
-			if (!inv_output.isEmpty() && (!inv_output.isItemEqual(output) || inv_output.getCount() - output.getCount() > inv_output.getMaxStackSize())) { return false; }
-			return true;
-		}
-		return false;
+		ItemStack output = getStackInSlot(SLOT_OUTPUT);
+		return recipe != null && (output.isEmpty() || (ItemHandlerHelper.canItemStacksStack(output, recipe.getOutput()) && output.getCount() + recipe.getOutput().getCount() <= output.getMaxStackSize()));
 	}
 
 	@Override
@@ -127,7 +126,7 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 			return;
 		}
 
-		if (++progress == 400) {
+		if (++progress >= 400) {
 			progress = 0;
 			if (reversed) {
 				decrStackSize(SLOT_INPUT_B, recipe.getInputA().getAmount());
@@ -144,12 +143,6 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 			updateInventoryItem(SLOT_OUTPUT);
 			markDirty();
 		}
-	}
-
-	@Optional.Method(modid = "Botania")
-	@Override
-	public int getBurnTime() {
-		return burn_time <= 1 ? 0 : burn_time - 1;
 	}
 
 	@Override
@@ -275,12 +268,13 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements ISidedI
 		}
 
 		if (burn_time == 0 && recipe != null && canOutput(recipe)) {
-			item_burn_time = burn_time = TileEntityFurnace.getItemBurnTime(getStackInSlot(SLOT_FUEL));
+			ItemStack fuel = getStackInSlot(SLOT_FUEL);
+			item_burn_time = burn_time = TileEntityFurnace.getItemBurnTime(fuel);
 			if (burn_time > 0) {
-				if (!getStackInSlot(SLOT_FUEL).isEmpty()) {
-					getStackInSlot(SLOT_FUEL).shrink(1);
-					if (getStackInSlot(SLOT_FUEL).getCount() == 0) {
-						setStackInSlot(SLOT_FUEL, getStackInSlot(SLOT_FUEL).getItem().getContainerItem(getStackInSlot(SLOT_FUEL)));
+				if (!fuel.isEmpty()) {
+					fuel.shrink(1);
+					if (fuel.isEmpty()) {
+						setStackInSlot(SLOT_FUEL, fuel.getItem().getContainerItem(fuel));
 					}
 					updateInventoryItem(SLOT_FUEL);
 				}

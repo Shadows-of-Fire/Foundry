@@ -15,7 +15,6 @@ import exter.foundry.item.ammo.ItemShellNormal;
 import exter.foundry.item.firearm.ItemRevolver;
 import exter.foundry.item.firearm.ItemShotgun;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
 
 public class FoundryItems {
 	static public ItemComponent item_component;
@@ -52,7 +51,7 @@ public class FoundryItems {
 		return new ItemStack(item_mold, amount, sub.id);
 	}
 
-	static public void registerItems(Configuration config) {
+	static public void registerItems() {
 		item_component = new ItemComponent();
 		item_mold = new ItemMold();
 		item_revolver = new ItemRevolver();

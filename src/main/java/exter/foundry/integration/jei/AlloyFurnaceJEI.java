@@ -17,11 +17,11 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class AlloyFurnaceJEI {
@@ -100,9 +100,9 @@ public class AlloyFurnaceJEI {
 			gui_items.init(1, true, 25, 0);
 			gui_items.init(2, false, 85, 18);
 
-			gui_items.set(0, ingredients.getInputs(ItemStack.class).get(0));
-			gui_items.set(1, ingredients.getInputs(ItemStack.class).get(1));
-			gui_items.set(2, ingredients.getOutputs(ItemStack.class).get(0));
+			gui_items.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
+			gui_items.set(1, ingredients.getInputs(VanillaTypes.ITEM).get(1));
+			gui_items.set(2, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
 		}
 	}
 
@@ -126,8 +126,8 @@ public class AlloyFurnaceJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(ItemStack.class, ImmutableList.of(recipe.getInputA().getItems(), recipe.getInputB().getItems()));
-			ingredients.setOutput(ItemStack.class, recipe.getOutput());
+			ingredients.setInputLists(VanillaTypes.ITEM, ImmutableList.of(recipe.getInputA().getItems(), recipe.getInputB().getItems()));
+			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 		}
 
 		@Override

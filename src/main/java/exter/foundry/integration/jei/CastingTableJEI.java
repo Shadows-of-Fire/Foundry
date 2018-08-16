@@ -16,6 +16,7 @@ import mezz.jei.api.gui.IGuiFluidStackGroup;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IStackHelper;
@@ -91,13 +92,13 @@ public class CastingTableJEI {
 			IGuiFluidStackGroup gui_fluids = recipeLayout.getFluidStacks();
 			IStackHelper stack_helper = helpers.getStackHelper();
 
-			List<FluidStack> input = ingredients.getInputs(FluidStack.class).get(0);
+			List<FluidStack> input = ingredients.getInputs(VanillaTypes.FLUID).get(0);
 
 			gui_items.init(0, false, 53, 20);
 			gui_items.init(1, true, 3, 39);
 			gui_fluids.init(2, true, 4, 4, 16, 24, input.get(0).amount, false, null);
 
-			gui_items.set(0, stack_helper.toItemStackList(ingredients.getOutputs(ItemStack.class).get(0)));
+			gui_items.set(0, stack_helper.toItemStackList(ingredients.getOutputs(VanillaTypes.ITEM).get(0)));
 			gui_items.set(1, table_item);
 			gui_fluids.set(2, input.get(0));
 		}
@@ -124,8 +125,8 @@ public class CastingTableJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInput(FluidStack.class, recipe.getInput());
-			ingredients.setOutput(ItemStack.class, recipe.getOutput());
+			ingredients.setInput(VanillaTypes.FLUID, recipe.getInput());
+			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 		}
 
 		public String getName() {
