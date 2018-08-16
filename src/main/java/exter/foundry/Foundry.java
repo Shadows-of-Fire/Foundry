@@ -79,7 +79,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import shadows.placebo.registry.RegistryInformation;
 import shadows.placebo.util.RecipeHelper;
 
-@Mod(modid = Foundry.MODID, name = Foundry.MODNAME, version = Foundry.MODVERSION, dependencies = "required-after:placebo@[1.2.0,);required-after:thermalfoundation;after:jei;after:tconstruct;after:mekanism")
+@Mod(modid = Foundry.MODID, name = Foundry.MODNAME, version = Foundry.MODVERSION, dependencies = "required-after:placebo@[1.2.0,);required-after:thermalfoundation;after:jei@[4.12,);after:tconstruct;after:mekanism")
 public class Foundry {
 	public static final String MODID = "foundry";
 	public static final String MODNAME = "Foundry";
