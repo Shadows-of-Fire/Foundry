@@ -102,7 +102,7 @@ public class ModIntegrationTiCon implements IModIntegration {
 				}
 			}
 		}
-		LIQUID_MAP.put("constantan", "Cupronickel");
+		if(!LIQUID_MAP.containsValue("Cupronickel")) LIQUID_MAP.put("constantan", "Cupronickel");
 
 		//Convert TiCon Smeltery recipes to Foundry ICF melting recipes (except those that have an existing recipe).
 		for (MeltingRecipe recipe : TinkerRegistry.getAllMeltingRecipies()) {
