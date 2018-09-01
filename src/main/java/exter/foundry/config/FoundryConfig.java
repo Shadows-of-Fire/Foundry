@@ -63,7 +63,10 @@ public class FoundryConfig {
 
 		FoundryAPI.FLUID_AMOUNT_INGOT = config.getInt("Fluid Ingot Value", "general", FoundryAPI.FLUID_AMOUNT_INGOT, 36, Integer.MAX_VALUE, "The value, in mB, of an ingot.");
 		FoundryAPI.FLUID_AMOUNT_ORE = config.getInt("Fluid Ore Value", "general", FoundryAPI.FLUID_AMOUNT_ORE, 0, Integer.MAX_VALUE, "The value, in mB, of an ore.  Set to 0 to use default values.");
-		if (FoundryAPI.FLUID_AMOUNT_ORE == 1) config.get("general", "Fluid Ore Value", 0).set(0);
+		if (FoundryAPI.FLUID_AMOUNT_ORE == 1) {
+			config.get("general", "Fluid Ore Value", 0).set(0);
+			FoundryAPI.FLUID_AMOUNT_ORE = 0;
+		}
 
 		if (config.hasChanged()) config.save();
 	}
