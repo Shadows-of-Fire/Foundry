@@ -3,6 +3,7 @@ package exter.foundry.api;
 import cofh.thermalfoundation.ThermalFoundation;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.api.recipe.matcher.OreMatcher;
+import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold.SubItem;
 import net.minecraft.item.ItemStack;
@@ -60,6 +61,9 @@ public class FoundryUtils {
 	}
 
 	public static void tryAddToolArmorRecipes(String name, Fluid fluid) {
+		if (fluid == FoundryFluids.liquid_cupronickel) name = "constantan";
+		else if (fluid == FoundryFluids.liquid_aluminium) name = "aluminum";
+
 		ItemStack helm = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ThermalFoundation.MOD_ID, "armor.helmet_" + name)));
 		ItemStack chest = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ThermalFoundation.MOD_ID, "armor.plate_" + name)));
 		ItemStack legs = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ThermalFoundation.MOD_ID, "armor.legs_" + name)));
@@ -81,8 +85,8 @@ public class FoundryUtils {
 		}
 
 		if (!boots.isEmpty()) {
-			FoundryAPI.MELTING_MANAGER.addRecipe(new ItemStackMatcher(boots), new FluidStack(fluid, FoundryAPI.getAmountHelm()));
-			FoundryAPI.CASTING_MANAGER.addRecipe(new ItemStackMatcher(boots), new FluidStack(fluid, FoundryAPI.getAmountHelm()), FoundryItems.mold(SubItem.BOOTS), null);
+			FoundryAPI.MELTING_MANAGER.addRecipe(new ItemStackMatcher(boots), new FluidStack(fluid, FoundryAPI.getAmountBoots()));
+			FoundryAPI.CASTING_MANAGER.addRecipe(new ItemStackMatcher(boots), new FluidStack(fluid, FoundryAPI.getAmountBoots()), FoundryItems.mold(SubItem.BOOTS), null);
 		}
 
 		ItemStack pickaxe = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ThermalFoundation.MOD_ID, "tool.pickaxe_" + name)));
