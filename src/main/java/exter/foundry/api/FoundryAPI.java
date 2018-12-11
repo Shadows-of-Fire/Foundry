@@ -104,14 +104,15 @@ public class FoundryAPI {
 	public static final int ATOMIZER_WATER_TANK_CAPACITY = 6000;
 
 	//Heat loss rates for crucibles.
-	public static final int CRUCIBLE_BASIC_TEMP_LOSS_RATE = 750;
+	public static final int CRUCIBLE_BASIC_TEMP_LOSS_RATE = 600;
 	public static final int CRUCIBLE_STANDARD_TEMP_LOSS_RATE = 750;
 	public static final int CRUCIBLE_ADVANCED_TEMP_LOSS_RATE = 900;
 
 	//Max temperatures for crucibles (in 1/100 deg Ks).
-	public static final int CRUCIBLE_BASIC_MAX_TEMP = 200000;
-	public static final int CRUCIBLE_STANDARD_MAX_TEMP = 250000;
-	public static final int CRUCIBLE_ADVANCED_MAX_TEMP = 400000;
+	//Will be set by foundry configs.  DO NOT EDIT.
+	public static int CRUCIBLE_BASIC_MAX_TEMP = 200000;
+	public static int CRUCIBLE_STANDARD_MAX_TEMP = 250000;
+	public static int CRUCIBLE_ADVANCED_MAX_TEMP = 400000;
 
 	//These fields are set by Foundry during it's preInit phase.
 	public static IMeltingRecipeManager MELTING_MANAGER;

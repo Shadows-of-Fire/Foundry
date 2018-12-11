@@ -120,10 +120,15 @@ public class FoundryMiscUtils {
 	}
 
 	@SideOnly(Side.CLIENT)
-	static public void localizeTooltip(String key, List<String> tooltip) {
-		for (String str : new TextComponentTranslation(key).getUnformattedText().split("//")) {
+	static public void localizeTooltip(String key, Object[] formatting, List<String> tooltip) {
+		for (String str : new TextComponentTranslation(key, formatting).getUnformattedText().split("//")) {
 			tooltip.add(TextFormatting.GRAY + str);
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	static public void localizeTooltip(String key, List<String> tooltip) {
+		localizeTooltip(key, new Object[0], tooltip);
 	}
 
 	static public void registerCasting(ItemStack item, Fluid liquid_metal, int ingots, ItemMold.SubItem mold_meta) {

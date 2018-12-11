@@ -9,17 +9,19 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.Optional;
 
 public class TileEntityInductionHeater extends TileEntityFoundryPowered {
+
 	private class HeatProvider implements IHeatProvider {
 		@Override
 		public int provideHeat(int max_heat) {
 			if (max_heat > MAX_PROVIDE) {
 				max_heat = MAX_PROVIDE;
 			}
+			if (world.isBlockPowered(pos)) return 0;
 			return useFoundryEnergy(max_heat * 3 / 2, true) * 2 / 3;
 		}
 	}
 
-	private static int MAX_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(350000, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE);
+	private static int MAX_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(FoundryAPI.CRUCIBLE_ADVANCED_MAX_TEMP, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE);
 
 	private final HeatProvider heat_provider;
 

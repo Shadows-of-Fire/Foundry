@@ -68,6 +68,10 @@ public class FoundryConfig {
 			FoundryAPI.FLUID_AMOUNT_ORE = 0;
 		}
 
+		FoundryAPI.CRUCIBLE_BASIC_MAX_TEMP = config.getInt("Basic Crucible Temp", "general", 2000, 0, 10000, "The maximum temperature (in K) of the basic crucible") * 100;
+		FoundryAPI.CRUCIBLE_STANDARD_MAX_TEMP = config.getInt("Standard Crucible Temp", "general", 2500, 0, 10000, "The maximum temperature (in K) of the basic crucible") * 100;
+		FoundryAPI.CRUCIBLE_ADVANCED_MAX_TEMP = config.getInt("Advanced Crucible Temp", "general", 4000, 0, 10000, "The maximum temperature (in K) of the basic crucible") * 100;
+
 		if (config.hasChanged()) config.save();
 	}
 }

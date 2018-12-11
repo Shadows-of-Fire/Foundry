@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import exter.foundry.Foundry;
+import exter.foundry.api.FoundryAPI;
 import exter.foundry.creativetab.FoundryTabMachines;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
@@ -108,7 +109,8 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider, I
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
-		FoundryMiscUtils.localizeTooltip("tooltip.foundry.machine." + getStateFromMeta(stack.getMetadata()).getValue(MACHINE).getTooltipKey(), tooltip);
+		IBlockState state = getStateFromMeta(stack.getMetadata());
+		FoundryMiscUtils.localizeTooltip("tooltip.foundry.machine." + state.getValue(MACHINE).getTooltipKey(), getFormatting(state), tooltip);
 	}
 
 	public ItemStack asItemStack(EnumMachine machine) {
@@ -148,6 +150,19 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider, I
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return createTileEntity(world, getStateFromMeta(meta));
+	}
+
+	public static Object[] getFormatting(IBlockState state) {
+		switch (state.getValue(MACHINE)) {
+		case CRUCIBLE_BASIC:
+			return new Object[] { FoundryAPI.CRUCIBLE_BASIC_MAX_TEMP / 100 };
+		case CRUCIBLE_STANDARD:
+			return new Object[] { FoundryAPI.CRUCIBLE_STANDARD_MAX_TEMP / 100 };
+		case CRUCIBLE_ADVANCED:
+			return new Object[] { FoundryAPI.CRUCIBLE_ADVANCED_MAX_TEMP / 100 };
+		default:
+			return new Object[0];
+		}
 	}
 
 	@Override
