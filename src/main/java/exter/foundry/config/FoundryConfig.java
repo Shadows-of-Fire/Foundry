@@ -25,6 +25,8 @@ public class FoundryConfig {
 	public static Set<String> hardcore_furnace_keep_ingots;
 	public static boolean hardcore_remove_ingot_nugget = false;
 	public static boolean hardcore_remove_block_ingot = false;
+	public static boolean hardcore_remove_ingot_block = false;
+	public static boolean hardcore_remove_nugget_ingot = false;
 
 	public static boolean metalCasterPower = true;
 	public static boolean crtError = true;
@@ -46,6 +48,8 @@ public class FoundryConfig {
 
 		hardcore_remove_ingot_nugget = config.getBoolean("remove_ingot_from_nuggets", "hardcore", false, "Remove 9 nuggets to ingot crafting recipes.");
 		hardcore_remove_block_ingot = config.getBoolean("remove_block_from_ingots", "hardcore", false, "Remove 9 ingots to block crafting recipes.");
+		hardcore_remove_ingot_block = config.getBoolean("remove_ingots_from_block", "hardcore", false, "Remove 9 ingots from block crafting recipes.");
+		hardcore_remove_nugget_ingot = config.getBoolean("remove_nuggets_from_ingot", "hardcore", false, "Remove 9 nuggets from ingot crafting recipes.");
 
 		String[] keep_ingots = config.getStringList("remove_ingots_from_furnace.keep", "hardcore", new String[] { "Copper", "Tin", "Zinc", "Bronze", "Brass", "Lead" }, "Material names of ingots to keep furnace recipes (case sensitive).");
 

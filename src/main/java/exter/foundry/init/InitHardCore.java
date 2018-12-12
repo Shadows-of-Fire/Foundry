@@ -39,6 +39,14 @@ public class InitHardCore {
 			removeCompressionCrafting("ingot", "block");
 		}
 
+		if (FoundryConfig.hardcore_remove_ingot_block) { // Remove block -> 9 ingots recipes (only if they can be melted)
+			removeDecompressionCrafting("block", "ingot");
+		}
+
+		if (FoundryConfig.hardcore_remove_nugget_ingot) { // Remove ingot -> 9 nuggets recipes (only if they can be melted)
+			removeDecompressionCrafting("ingot", "nugget");
+		}
+
 		if (FoundryConfig.hardcore_furnace_remove_ingots) { // Remove furnace recipes that outputs ingots (except the ones in the keep list or can't be melted).
 			Iterator<Map.Entry<ItemStack, ItemStack>> iter = FurnaceRecipes.instance().getSmeltingList().entrySet().iterator();
 			while (iter.hasNext()) {
@@ -78,6 +86,7 @@ public class InitHardCore {
 				return false;
 			}
 		}, 3, 3);
+
 		for (String ore_name : OreDictionary.getOreNames()) {
 			if (ore_name.startsWith(prefix)) {
 				for (ItemStack item : OreDictionary.getOres(ore_name, false)) {
@@ -88,13 +97,41 @@ public class InitHardCore {
 						for (IRecipe recipe : ForgeRegistries.RECIPES) {
 							if (recipe.matches(grid, null) && hasOreDictionaryPrefix(recipe.getCraftingResult(grid), result_prefix)) {
 								remove.add(recipe);
-								break;
 							}
 						}
 					}
 				}
 			}
 		}
+		for (IRecipe rec : remove)
+			((IForgeRegistryModifiable<IRecipe>) ForgeRegistries.RECIPES).remove(rec.getRegistryName());
+	}
+
+	static private void removeDecompressionCrafting(String prefix, String result_prefix) {
+		Set<IRecipe> remove = new HashSet<>();
+		InventoryCrafting grid = new InventoryCrafting(new Container() {
+			@Override
+			public boolean canInteractWith(EntityPlayer playerIn) {
+				return false;
+			}
+		}, 1, 1);
+
+		for (String ore_name : OreDictionary.getOreNames()) {
+			if (ore_name.startsWith(prefix)) {
+				for (ItemStack item : OreDictionary.getOres(ore_name, false)) {
+					if (MeltingRecipeManager.INSTANCE.findRecipe(item) != null) {
+						grid.setInventorySlotContents(0, item);
+						for (IRecipe recipe : ForgeRegistries.RECIPES) {
+							if (recipe.matches(grid, null) && 
+									hasOreDictionaryPrefix(recipe.getCraftingResult(grid), result_prefix)) {
+								remove.add(recipe);
+							}
+						}
+					}
+				}
+			}
+		}
+
 		for (IRecipe rec : remove)
 			((IForgeRegistryModifiable<IRecipe>) ForgeRegistries.RECIPES).remove(rec.getRegistryName());
 	}
