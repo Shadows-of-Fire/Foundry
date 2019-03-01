@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "foundry:refractoryhopper"
+  },
+  "pattern": [
+    "R R",
+    "RBR",
+    " R "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    }
+  }
+}

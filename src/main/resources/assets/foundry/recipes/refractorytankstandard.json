@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "foundry:refractorytankstandard"
+  },
+  "pattern": [
+    "BPB",
+    "G G",
+    "BPB"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "#PLATEIRON"
+    },
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "G": {
+      "item": "foundry:refractoryglass"
+    }
+  }
+}

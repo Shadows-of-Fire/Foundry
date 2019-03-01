@@ -1,0 +1,26 @@
+{
+  "result": {
+    "nbt": "{Slot_0:{Empty:1b},Slot_1:{Empty:1b},Slot_2:{Empty:1b},Slot_3:{Empty:1b},position:0,Slot_4:{Empty:1b},Slot_5:{Empty:1b},Slot_6:{Empty:1b},Slot_7:{Empty:1b}}",
+    "item": "foundry:revolver",
+    "type": "minecraft:item_nbt"
+  },
+  "pattern": [
+    "BD",
+    " F"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 3
+    },
+    "D": {
+      "item": "foundry:component",
+      "data": 4
+    },
+    "F": {
+      "item": "foundry:component",
+      "data": 5
+    }
+  }
+}

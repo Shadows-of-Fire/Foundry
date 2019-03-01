@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "foundry:componentblock",
+    "data": 2
+  },
+  "pattern": [
+    "IBI",
+    "B B",
+    "IBI"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 18
+    },
+    "I": {
+      "item": "#PLATESTEEL"
+    }
+  }
+}

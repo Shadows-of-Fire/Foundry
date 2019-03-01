@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "foundry:fluidcontainer",
+    "data": 0,
+    "count": 2
+  },
+  "pattern": [
+    " T ",
+    "BGB",
+    " T "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "T": {
+      "item": "#PLATETIN"
+    },
+    "G": {
+      "item": "foundry:refractoryglass"
+    }
+  }
+}

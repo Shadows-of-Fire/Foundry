@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "foundry:bronzecauldron"
+  },
+  "pattern": [
+    "I I",
+    "I I",
+    "III"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "I": {
+      "item": "#INGOTBRONZE"
+    }
+  }
+}

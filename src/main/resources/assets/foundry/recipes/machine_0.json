@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 0
+  },
+  "pattern": [
+    "BAB",
+    "BCB",
+    "BIB"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "A": {
+      "item": "foundry:bronzecauldron"
+    },
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 3
+    },
+    "I": {
+      "item": "#INGOTCOPPER"
+    }
+  }
+}

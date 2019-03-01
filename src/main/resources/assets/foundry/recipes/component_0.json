@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "foundry:component",
+    "data": 0,
+    "count": 2
+  },
+  "pattern": [
+    "CCC",
+    "CRC",
+    "CCC"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "#RODCUPRONICKEL"
+    }
+  }
+}

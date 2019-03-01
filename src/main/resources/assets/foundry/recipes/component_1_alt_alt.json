@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "foundry:component",
+    "data": 1,
+    "count": 8
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:clay"
+    },
+    {
+      "item": "minecraft:clay"
+    },
+    {
+      "item": "minecraft:sand",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

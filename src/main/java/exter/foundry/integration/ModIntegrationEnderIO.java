@@ -17,8 +17,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-//This is outdated and will not be updated until EnderIO becomes available on a maven.
-@Deprecated
 public class ModIntegrationEnderIO implements IModIntegration {
 
 	private Fluid redstoneAlloy;

@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "foundry:moldstation"
+  },
+  "pattern": [
+    "BWB",
+    "BSB",
+    "BFB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "S": {
+      "item": "minecraft:stone_slab",
+      "data": 0
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "W": {
+      "item": "minecraft:crafting_table"
+    }
+  }
+}

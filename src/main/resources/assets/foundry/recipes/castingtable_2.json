@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "foundry:castingtable",
+    "data": 2
+  },
+  "pattern": [
+    "BMB",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "S": {
+      "item": "minecraft:stone_slab",
+      "data": 0
+    },
+    "M": {
+      "item": "foundry:mold",
+      "data": 3
+    }
+  }
+}

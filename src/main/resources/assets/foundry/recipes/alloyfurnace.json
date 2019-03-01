@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "foundry:alloyfurnace"
+  },
+  "pattern": [
+    "BBB",
+    "BFB",
+    "BBB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  }
+}

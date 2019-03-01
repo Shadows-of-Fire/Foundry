@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "foundry:roundsnow",
+    "count": 2
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "foundry:roundhollow"
+    },
+    {
+      "item": "foundry:roundhollow"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "foundry:infernotank"
+  },
+  "pattern": [
+    "BPB",
+    "G G",
+    "BPB"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "#PLATESTEEL"
+    },
+    "B": {
+      "item": "foundry:component",
+      "data": 18
+    },
+    "G": {
+      "item": "foundry:refractoryglass"
+    }
+  }
+}

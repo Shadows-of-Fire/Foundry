@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "foundry:refractoryspout"
+  },
+  "pattern": [
+    "RL",
+    "BB",
+    "R "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+      "item": "#INGOTBRONZE"
+    },
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "L": {
+      "item": "minecraft:lever"
+    }
+  }
+}

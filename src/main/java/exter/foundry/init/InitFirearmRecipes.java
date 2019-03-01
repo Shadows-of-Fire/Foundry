@@ -1,6 +1,5 @@
 package exter.foundry.init;
 
-import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.fluid.FoundryFluids;
@@ -10,12 +9,13 @@ import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class InitFirearmRecipes {
+
 	static public void init() {
+
 		ItemStack mold_bullet = FoundryItems.mold(ItemMold.SubItem.BULLET);
 		ItemStack mold_bullet_hollow = FoundryItems.mold(ItemMold.SubItem.BULLET_HOLLOW);
 		ItemStack mold_round_casing = FoundryItems.mold(ItemMold.SubItem.ROUND_CASING);
@@ -97,32 +97,5 @@ public class InitFirearmRecipes {
 		CastingRecipeManager.INSTANCE.addRecipe(new ItemStackMatcher(shotgun_pump), new FluidStack(FoundryFluids.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT / 2), mold_shotgun_pump, null);
 		CastingRecipeManager.INSTANCE.addRecipe(new ItemStackMatcher(shotgun_frame), new FluidStack(FoundryFluids.liquid_steel, FoundryAPI.FLUID_AMOUNT_INGOT * 3 / 2), mold_shotgun_frame, null);
 
-		ItemStack paper = new ItemStack(Items.PAPER);
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_revolver.empty(), "BD", " F", 'B', FoundryItems.component(ItemComponent.SubItem.GUN_BARREL), 'D', FoundryItems.component(ItemComponent.SubItem.REVOLVER_DRUM), 'F', FoundryItems.component(ItemComponent.SubItem.REVOLVER_FRAME));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_shotgun.empty(), "BB ", " PF", 'B', FoundryItems.component(ItemComponent.SubItem.GUN_BARREL), 'P', FoundryItems.component(ItemComponent.SubItem.SHOTGUN_PUMP), 'F', FoundryItems.component(ItemComponent.SubItem.SHOTGUN_FRAME));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_round, "B", "G", "C", 'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET), 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_round_hollow, "B", "G", "C", 'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_HOLLOW), 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_round_jacketed, "B", "G", "C", 'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_JACKETED), 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_round_fire, "B", "A", 'B', "dustSmallBlaze", 'A', FoundryItems.item_round_hollow);
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_shell, "PAP", "PGP", "PCP", 'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET), 'A', paper, 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_round_ap, "B", "G", "C", 'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_STEEL), 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_round_lumium, "B", "G", "C", 'B', FoundryItems.component(ItemComponent.SubItem.AMMO_BULLET_LUMIUM), 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_shell_ap, "PAP", "PGP", "PCP", 'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_STEEL), 'A', paper, 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL));
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.item_shell_lumium, "PAP", "PGP", "PCP", 'P', FoundryItems.component(ItemComponent.SubItem.AMMO_PELLET_LUMIUM), 'A', paper, 'G', "dustSmallGunpowder", 'C', FoundryItems.component(ItemComponent.SubItem.AMMO_CASING_SHELL));
-
-		Foundry.HELPER.addForgeShapeless(new ItemStack(FoundryItems.item_round_poison, 2), Items.SPIDER_EYE, FoundryItems.item_round_hollow, FoundryItems.item_round_hollow);
-
-		Foundry.HELPER.addForgeShapeless(new ItemStack(FoundryItems.item_round_snow, 2), Items.SNOWBALL, FoundryItems.item_round_hollow, FoundryItems.item_round_hollow);
 	}
 }

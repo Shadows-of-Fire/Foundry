@@ -1,0 +1,26 @@
+{
+  "result": {
+    "nbt": "{Slot_0:{Empty:1b},Slot_1:{Empty:1b},Slot_2:{Empty:1b},Slot_3:{Empty:1b},Slot_4:{Empty:1b}}",
+    "item": "foundry:shotgun",
+    "type": "minecraft:item_nbt"
+  },
+  "pattern": [
+    "BB ",
+    " PF"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "foundry:component",
+      "data": 12
+    },
+    "B": {
+      "item": "foundry:component",
+      "data": 3
+    },
+    "F": {
+      "item": "foundry:component",
+      "data": 13
+    }
+  }
+}

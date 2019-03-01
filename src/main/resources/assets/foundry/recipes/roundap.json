@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "foundry:roundap"
+  },
+  "pattern": [
+    "B",
+    "G",
+    "C"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 14
+    },
+    "C": {
+      "item": "foundry:component",
+      "data": 6
+    },
+    "G": {
+      "item": "#DUSTSMALLGUNPOWDER"
+    }
+  }
+}

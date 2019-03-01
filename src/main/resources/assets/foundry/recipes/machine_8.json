@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 8
+  },
+  "pattern": [
+    "BAB",
+    "BCB",
+    "BIB"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "A": {
+      "item": "minecraft:cauldron"
+    },
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "I": {
+      "item": "#PLATECOPPER"
+    }
+  }
+}

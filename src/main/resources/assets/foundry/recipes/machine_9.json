@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 9
+  },
+  "pattern": [
+    "HRH",
+    "BCB",
+    "BBB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "R": {
+      "item": "minecraft:cauldron"
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "H": {
+      "item": "foundry:refractoryspout"
+    }
+  }
+}

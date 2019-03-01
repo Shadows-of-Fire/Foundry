@@ -1,5 +1,6 @@
 package exter.foundry;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import exter.foundry.init.InitRecipes;
@@ -10,17 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
-@EventBusSubscriber
 public class FoundryRegistry {
 
-	public static final List<Block> BLOCKS = Foundry.INFO.getBlockList();
-	public static final List<Item> ITEMS = Foundry.INFO.getItemList();
-	public static final List<SoundEvent> SOUNDS = Foundry.INFO.getSoundList();
-	public static final List<IRecipe> RECIPES = Foundry.INFO.getRecipeList();
+	public static final List<Block> BLOCKS = new LinkedList<>();
+	public static final List<Item> ITEMS = new LinkedList<>();
+	public static final List<SoundEvent> SOUNDS = new LinkedList<>();
 
 	@SubscribeEvent
 	public void registerBlocks(Register<Block> e) {
@@ -38,8 +36,7 @@ public class FoundryRegistry {
 		OreDictionary.registerOre("dustSmallBlaze", FoundryItems.component(ItemComponent.SubItem.DUST_SMALL_BLAZE));
 		OreDictionary.registerOre("dustSmallGunpowder", FoundryItems.component(ItemComponent.SubItem.DUST_SMALL_GUNPOWDER));
 		OreDictionary.registerOre("rodCupronickel", FoundryItems.component(ItemComponent.SubItem.ROD_CUPRONICKEL));
-		InitRecipes.preInit();
-		e.getRegistry().registerAll(RECIPES.toArray(new IRecipe[RECIPES.size()]));
+		InitRecipes.load();
 	}
 
 	@SubscribeEvent

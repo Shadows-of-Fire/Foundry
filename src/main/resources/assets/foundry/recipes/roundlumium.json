@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "foundry:roundlumium"
+  },
+  "pattern": [
+    "B",
+    "G",
+    "C"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 19
+    },
+    "C": {
+      "item": "foundry:component",
+      "data": 6
+    },
+    "G": {
+      "item": "#DUSTSMALLGUNPOWDER"
+    }
+  }
+}

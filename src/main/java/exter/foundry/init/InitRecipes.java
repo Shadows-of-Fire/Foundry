@@ -4,23 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cofh.thermalfoundation.init.TFFluids;
-import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.api.recipe.matcher.OreMatcher;
-import exter.foundry.block.BlockCastingTable.EnumTable;
-import exter.foundry.block.BlockComponent;
-import exter.foundry.block.BlockFoundryMachine.EnumMachine;
-import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.fluid.FluidLiquidMetal;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
-import exter.foundry.item.ItemComponent.SubItem;
 import exter.foundry.item.ItemMold;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.material.OreDictMaterial;
@@ -69,33 +63,6 @@ public class InitRecipes {
 			}
 		}
 
-		/*  I Don't really know what this does.  It doesn't make much sense.
-		for (Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()) {
-			ItemStack input = entry.getKey();
-			Item item = entry.getValue().getItem();
-		
-			if (item == Items.GOLD_NUGGET || item == Items.IRON_NUGGET) continue;
-		
-			if (!input.isEmpty() && MeltingRecipeManager.INSTANCE.findRecipe(input) == null) {
-				ItemStack result = entry.getValue();
-				IMeltingRecipe recipe = MeltingRecipeManager.INSTANCE.findRecipe(result);
-				if (recipe != null) {
-					Fluid liquid_metal = recipe.getOutput().getFluid();
-					int base_amount = recipe.getOutput().amount;
-		
-					int[] ids = OreDictionary.getOreIDs(input);
-					for (int j : ids) {
-						if (OreDictionary.getOreName(j).startsWith("ore") && !OreDictionary.getOreName(j).startsWith("orePoor")) {
-							base_amount = FoundryAPI.getAmountOre();
-							break;
-						}
-					}
-					MeltingRecipeManager.INSTANCE.addRecipe(new ItemStackMatcher(input), new FluidStack(liquid_metal, base_amount * result.getCount()), recipe.getMeltingPoint(), recipe.getMeltingSpeed());
-				}
-			}
-		}
-		*/
-
 		ItemStack ingot_mold = FoundryItems.mold(ItemMold.SubItem.INGOT);
 		ItemStack block_mold = FoundryItems.mold(ItemMold.SubItem.BLOCK);
 		for (String name : LiquidMetalRegistry.INSTANCE.getFluidNames()) {
@@ -134,10 +101,7 @@ public class InitRecipes {
 		InitHardCore.init();
 	}
 
-	static public void preInit() {
-
-		Foundry.HELPER.addShapeless(FoundryItems.component(SubItem.DUST_SMALL_BLAZE, 4), Items.BLAZE_POWDER);
-		Foundry.HELPER.addShapeless(FoundryItems.component(SubItem.DUST_SMALL_GUNPOWDER, 4), Items.GUNPOWDER);
+	static public void load() {
 
 		if (FoundryConfig.recipe_glass) {
 			final String[] oredict_names = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
@@ -166,116 +130,9 @@ public class InitRecipes {
 				InfuserRecipeManager.INSTANCE.addRecipe(new FluidStack(liquid_glass_colored, 2000), new FluidStack(liquid_glass, 2000), new OreMatcher(oredict_names[dye.getDyeDamage()]), 5000);
 			}
 		}
-		registerCrafting();
-	}
 
-	public static void registerCrafting() {
-
-		ItemStack redstone_stack = new ItemStack(Items.REDSTONE);
-		ItemStack furnace_stack = new ItemStack(Blocks.FURNACE);
-		ItemStack clay_stack = new ItemStack(Items.CLAY_BALL);
-		ItemStack sand_stack = new ItemStack(Blocks.SAND, 1, -1);
-		ItemStack soulsand_stack = new ItemStack(Blocks.SOUL_SAND);
-		ItemStack clayblock_stack = new ItemStack(Blocks.CLAY, 1, -1);
-		ItemStack casing_basic_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING_BASIC);
-		ItemStack casing_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING_STANDARD);
-		ItemStack casing_inferno_stack = FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.CASING_ADVANCED);
-		ItemStack piston_stack = new ItemStack(Blocks.PISTON);
-		ItemStack bronze_cauldron_stack = new ItemStack(FoundryBlocks.block_cauldron_bronze);
-		ItemStack cauldron_stack = new ItemStack(Items.CAULDRON);
-		ItemStack chest_stack = new ItemStack(Blocks.CHEST);
-		ItemStack refclay_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY);
-		ItemStack refclay_small_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY_SMALL);
-		ItemStack refractoryclay8_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY, 8);
-		ItemStack refbrick_stack = FoundryItems.component(ItemComponent.SubItem.REFRACTORYBRICK);
-		ItemStack refglass_stack = new ItemStack(FoundryBlocks.block_refractory_glass);
-		ItemStack heatingcoil_stack = FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL);
-		ItemStack emptycontainer2_stack = FoundryItems.item_container.empty(2);
-		ItemStack comparator_stack = new ItemStack(Items.COMPARATOR);
-		ItemStack repeater_stack = new ItemStack(Items.REPEATER);
-		ItemStack bucket_stack = new ItemStack(Items.BUCKET);
-		ItemStack magmacream_stack = new ItemStack(Items.MAGMA_CREAM);
-		ItemStack infernoclay8_stack = FoundryItems.component(ItemComponent.SubItem.INFERNOCLAY, 8);
-		ItemStack infbrick_stack = FoundryItems.component(ItemComponent.SubItem.INFERNOBRICK);
-		ItemStack mold_ingot = FoundryItems.mold(ItemMold.SubItem.INGOT);
-		ItemStack mold_plate = FoundryItems.mold(ItemMold.SubItem.PLATE);
-		ItemStack mold_block = FoundryItems.mold(ItemMold.SubItem.BLOCK);
-		ItemStack mold_rod = FoundryItems.mold(ItemMold.SubItem.ROD);
-
-		Foundry.HELPER.addForgeShaped(refractoryclay8_stack, "CCC", "CSC", "CCC", 'C', clay_stack, 'S', sand_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_component.asItemStack(BlockComponent.EnumVariant.REFRACTORY_CLAY), "CC", "CC", 'C', refclay_stack);
-
-		Foundry.HELPER.addForgeShaped(refclay_stack, "CC", "CC", 'C', refclay_small_stack);
-
-		Foundry.HELPER.addForgeShaped(infernoclay8_stack, "COC", "CSC", "CMC", 'C', refclay_stack, 'S', soulsand_stack, 'M', magmacream_stack, 'O', "dustObsidian");
-
-		Foundry.HELPER.addForgeShapeless(refractoryclay8_stack, clayblock_stack, clayblock_stack, sand_stack);
-
-		GameRegistry.addSmelting(FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY), refbrick_stack, 0.0f);
-
-		GameRegistry.addSmelting(FoundryItems.component(ItemComponent.SubItem.INFERNOCLAY), infbrick_stack, 0.0f);
-
-		Foundry.HELPER.addForgeShaped(emptycontainer2_stack, " T ", "BGB", " T ", 'T', "plateTin", 'B', refbrick_stack, 'G', refglass_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryItems.component(ItemComponent.SubItem.HEATINGCOIL, 2), "CCC", "CRC", "CCC", 'C', "rodCupronickel", 'R', redstone_stack);
-
-		Foundry.HELPER.addForgeShaped(casing_basic_stack, "IBI", "B B", "IBI", 'I', "ingotBronze", 'B', refbrick_stack);
-
-		Foundry.HELPER.addForgeShaped(casing_stack, "IBI", "B B", "IBI", 'I', "plateIron", 'B', refbrick_stack);
-
-		Foundry.HELPER.addForgeShaped(casing_inferno_stack, "IBI", "B B", "IBI", 'I', "plateSteel", 'B', infbrick_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_refractory_tank_basic), "BPB", "G G", "BPB", 'G', refglass_stack, 'P', "plateBronze", 'B', refbrick_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_refractory_tank_standard), "BPB", "G G", "BPB", 'G', refglass_stack, 'P', "plateIron", 'B', refbrick_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_refractory_tank_advanced), "BPB", "G G", "BPB", 'G', refglass_stack, 'P', "plateSteel", 'B', infbrick_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_burner_heater), "I", "C", "F", 'F', furnace_stack, 'I', "ingotCopper", 'C', casing_basic_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_casting_table.asItemStack(EnumTable.INGOT), "BMB", " S ", 'S', new ItemStack(Blocks.STONE_SLAB), 'B', refbrick_stack, 'M', mold_ingot);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_casting_table.asItemStack(EnumTable.PLATE), "BMB", " S ", 'S', new ItemStack(Blocks.STONE_SLAB), 'B', refbrick_stack, 'M', mold_plate);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_casting_table.asItemStack(EnumTable.ROD), "BMB", " S ", 'S', new ItemStack(Blocks.STONE_SLAB), 'B', refbrick_stack, 'M', mold_rod);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_casting_table.asItemStack(EnumTable.BLOCK), "BMB", " S ", 'S', new ItemStack(Blocks.STONE_SLAB), 'B', refbrick_stack, 'M', mold_block);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_refractory_spout, "RL", "BB", "R ", 'R', "ingotBronze", 'B', refbrick_stack, 'L', new ItemStack(Blocks.LEVER));
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.INDUCTIONHEATER), "HIH", "RCR", "HRH", 'H', heatingcoil_stack, 'R', redstone_stack, 'I', "plateCopper", 'C', casing_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE_BASIC), "BAB", "BCB", "BIB", 'B', refbrick_stack, 'I', "ingotCopper", 'C', casing_basic_stack, 'A', bronze_cauldron_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE_STANDARD), "BAB", "BCB", "BIB", 'B', refbrick_stack, 'I', "plateCopper", 'C', casing_stack, 'A', cauldron_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.CRUCIBLE_ADVANCED), "BAB", "BCB", "BIB", 'B', infbrick_stack, 'I', "plateSilver", 'C', casing_inferno_stack, 'A', cauldron_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.INFUSER), " R ", "GCG", "HRH", 'R', redstone_stack, 'C', casing_stack, 'G', "gearInvar", 'H', heatingcoil_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_alloy_furnace), "BBB", "BFB", "BBB", 'B', refbrick_stack, 'F', furnace_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_refractory_hopper), "R R", "RBR", " R ", 'R', refbrick_stack, 'B', bucket_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.ATOMIZER), "GHG", "RCR", " B ", 'H', new ItemStack(FoundryBlocks.block_refractory_hopper), 'B', Items.BUCKET, 'R', Items.REDSTONE, 'C', casing_stack, 'G', "gearBronze");
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.ALLOYING_CRUCIBLE), "HRH", "BCB", "BBB", 'H', new ItemStack(FoundryBlocks.block_refractory_spout), 'B', refbrick_stack, 'R', cauldron_stack, 'C', casing_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.CASTER), " H ", "RCR", "GPG", 'H', chest_stack, 'G', "gearIron", 'P', piston_stack, 'C', casing_stack, 'R', redstone_stack);
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.ALLOYMIXER), " P ", "GCG", " R ", 'C', casing_stack, 'R', redstone_stack, 'G', "gearInvar", 'P', "plateInvar");
-
-		Foundry.HELPER.addForgeShaped(FoundryBlocks.block_machine.asItemStack(EnumMachine.MATERIALROUTER), "GEG", "PRP", "GCG", 'R', casing_stack, 'P', "plateSignalum", 'C', comparator_stack, 'E', repeater_stack, 'G', "gearGold");
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_mold_station), "BWB", "BSB", "BFB", 'B', refbrick_stack, 'W', new ItemStack(Blocks.CRAFTING_TABLE), 'S', new ItemStack(Blocks.STONE_SLAB), 'F', furnace_stack);
-
-		Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_cauldron_bronze), "I I", "I I", "III", 'I', "ingotBronze");
-
-		if (FoundryConfig.block_cokeoven) {
-			Foundry.HELPER.addForgeShaped(new ItemStack(FoundryBlocks.block_coke_oven), "BFB", "BCB", "BIB", 'B', refbrick_stack, 'F', furnace_stack, 'I', "plateCopper", 'C', casing_stack);
-		}
-
+		GameRegistry.addSmelting(FoundryItems.component(ItemComponent.SubItem.REFRACTORYCLAY), FoundryItems.component(ItemComponent.SubItem.REFRACTORYBRICK), 0.0f);
+		GameRegistry.addSmelting(FoundryItems.component(ItemComponent.SubItem.INFERNOCLAY), FoundryItems.component(ItemComponent.SubItem.INFERNOBRICK), 0.0f);
 		InitFirearmRecipes.init();
 	}
 

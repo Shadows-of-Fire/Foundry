@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 6
+  },
+  "pattern": [
+    "HIH",
+    "RCR",
+    "HRH"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "H": {
+      "item": "foundry:component",
+      "data": 0
+    },
+    "I": {
+      "item": "#PLATECOPPER"
+    }
+  }
+}

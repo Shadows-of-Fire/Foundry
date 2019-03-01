@@ -1,0 +1,128 @@
+[
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "dustObsidian"
+    },
+    "name": "DUSTOBSIDIAN"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "dustSmallBlaze"
+    },
+    "name": "DUSTSMALLBLAZE"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "dustSmallGunpowder"
+    },
+    "name": "DUSTSMALLGUNPOWDER"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "gearBronze"
+    },
+    "name": "GEARBRONZE"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "gearGold"
+    },
+    "name": "GEARGOLD"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "gearInvar"
+    },
+    "name": "GEARINVAR"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "gearIron"
+    },
+    "name": "GEARIRON"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "ingotBronze"
+    },
+    "name": "INGOTBRONZE"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    },
+    "name": "INGOTCOPPER"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateBronze"
+    },
+    "name": "PLATEBRONZE"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateCopper"
+    },
+    "name": "PLATECOPPER"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateInvar"
+    },
+    "name": "PLATEINVAR"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateIron"
+    },
+    "name": "PLATEIRON"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateSignalum"
+    },
+    "name": "PLATESIGNALUM"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateSilver"
+    },
+    "name": "PLATESILVER"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateSteel"
+    },
+    "name": "PLATESTEEL"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "plateTin"
+    },
+    "name": "PLATETIN"
+  },
+  {
+    "ingredient": {
+      "type": "forge:ore_dict",
+      "ore": "rodCupronickel"
+    },
+    "name": "RODCUPRONICKEL"
+  }
+]

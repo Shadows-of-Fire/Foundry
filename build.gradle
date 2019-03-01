@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.12.2-3.3.5"
+version = "1.12.2-4.0.0"
 group = "exter.foundry"
 archivesBaseName = "Foundry"
 
@@ -24,27 +24,36 @@ minecraft {
 }
 
 repositories {
-	maven {
-		url "http://dvs1.progwml6.com/files/maven"
-	}
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
 	maven {
 		url "http://tehnut.info/maven"
 	}
 	maven {
-		url 'http://maven.blamejared.com'
+		url "http://maven.tterrag.com"
 	}
 	maven {
-        url 'http://maven2.tterrag.com/'
+        url "https://maven2.tterrag.com/"
     }
+	maven {
+		url 'http://maven.blamejared.com'
+	}
 }
 
 dependencies {
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
     deobfCompile "mezz.jei:jei_1.12.2:+"
-	deobfCompile "mcp.mobius.waila:Hwyla:+"
+	deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
 	deobfCompile "slimeknights:TConstruct:1.12.2-+"
 	deobfCompile "slimeknights.mantle:Mantle:1.12-+"
-	//deobfCompile "com.enderio:EnderIO:1.12.2-+"
+	deobfCompile("com.enderio:EnderIO:1.12.2-+"){
+        transitive = false
+    }
+	deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.45"
+	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
+	deobfCompile "info.loenwind.autoconfig:AutoConfig:+"
+	deobfCompile "info.loenwind.autosave:AutoSave:+"
 }
 
 

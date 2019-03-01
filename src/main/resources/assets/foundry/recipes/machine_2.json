@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 2
+  },
+  "pattern": [
+    " P ",
+    "GCG",
+    " R "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "#PLATEINVAR"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "G": {
+      "item": "#GEARINVAR"
+    }
+  }
+}

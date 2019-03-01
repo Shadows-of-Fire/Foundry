@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "foundry:cokeoven"
+  },
+  "pattern": [
+    "BFB",
+    "BCB",
+    "BIB"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "foundry:component",
+      "data": 2
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "item": "#PLATECOPPER"
+    }
+  }
+}

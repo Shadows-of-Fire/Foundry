@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 5
+  },
+  "pattern": [
+    "GHG",
+    "RCR",
+    " B "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "G": {
+      "item": "#GEARBRONZE"
+    },
+    "H": {
+      "item": "foundry:refractoryhopper"
+    }
+  }
+}

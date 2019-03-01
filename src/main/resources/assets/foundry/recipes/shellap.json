@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "foundry:shellap"
+  },
+  "pattern": [
+    "PAP",
+    "PGP",
+    "PCP"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "foundry:component",
+      "data": 15
+    },
+    "A": {
+      "item": "minecraft:paper"
+    },
+    "C": {
+      "item": "foundry:component",
+      "data": 11
+    },
+    "G": {
+      "item": "#DUSTSMALLGUNPOWDER"
+    }
+  }
+}

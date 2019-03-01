@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 4
+  },
+  "pattern": [
+    "GEG",
+    "PRP",
+    "GCG"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "#PLATESIGNALUM"
+    },
+    "R": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "E": {
+      "item": "minecraft:repeater"
+    },
+    "G": {
+      "item": "#GEARGOLD"
+    }
+  }
+}

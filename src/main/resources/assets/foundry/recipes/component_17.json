@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "foundry:component",
+    "data": 17,
+    "count": 8
+  },
+  "pattern": [
+    "COC",
+    "CSC",
+    "CMC"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "C": {
+      "item": "foundry:component",
+      "data": 1
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "M": {
+      "item": "minecraft:magma_cream"
+    },
+    "O": {
+      "item": "#DUSTOBSIDIAN"
+    }
+  }
+}

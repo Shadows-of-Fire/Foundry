@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "foundry:burnerheater"
+  },
+  "pattern": [
+    "I",
+    "C",
+    "F"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 3
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "item": "#INGOTCOPPER"
+    }
+  }
+}

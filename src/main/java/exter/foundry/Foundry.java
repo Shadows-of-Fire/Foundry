@@ -76,8 +76,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import shadows.placebo.registry.RegistryInformation;
-import shadows.placebo.util.RecipeHelper;
 
 @Mod(modid = Foundry.MODID, name = Foundry.MODNAME, version = Foundry.MODVERSION, dependencies = "required-after:placebo@[1.2.0,);required-after:thermalfoundation;after:jei@[4.12,);after:tconstruct;after:mekanism")
 public class Foundry {
@@ -94,10 +92,6 @@ public class Foundry {
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-
-	public static final RegistryInformation INFO = new RegistryInformation(MODID, null);
-
-	public static final RecipeHelper HELPER = new RecipeHelper(MODID, MODNAME, INFO.getRecipeList());
 
 	static {
 		FluidRegistry.enableUniversalBucket();

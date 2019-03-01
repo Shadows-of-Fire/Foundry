@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "foundry:machine",
+    "data": 1
+  },
+  "pattern": [
+    " H ",
+    "RCR",
+    "GPG"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "foundry:componentblock",
+      "data": 0
+    },
+    "G": {
+      "item": "#GEARIRON"
+    },
+    "H": {
+      "item": "minecraft:chest"
+    }
+  }
+}

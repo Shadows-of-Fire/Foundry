@@ -35,9 +35,9 @@ public final class ModIntegrationManager {
 	public static void registerDefaults() {
 		ModIntegrationManager.register(new ModIntegrationMolten());
 		if (Loader.isModLoaded(BOTANIA)) ModIntegrationManager.register(new ModIntegrationBotania());
-		//if (Loader.isModLoaded(ENDERIO)) ModIntegrationManager.register(new ModIntegrationEnderIO()); Disabled for now.
+		if (Loader.isModLoaded(ENDERIO)) ModIntegrationManager.register(new ModIntegrationEnderIO());
 		if (Loader.isModLoaded(TCONSTRUCT)) ModIntegrationManager.register(new ModIntegrationTiCon());
-		if (Loader.isModLoaded(CRAFTTWEAKER)) ModIntegrationManager.register(new ModIntegrationMinetweaker()); //Has to go last.
+		if (Loader.isModLoaded(CRAFTTWEAKER)) ModIntegrationManager.register(new ModIntegrationMinetweaker()); //Must be last.
 	}
 
 }
