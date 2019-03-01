@@ -5,7 +5,7 @@ import java.util.List;
 import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.proxy.FoundryGuiHandler;
 import exter.foundry.sound.FoundrySounds;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -121,7 +121,7 @@ public class ItemShotgun extends ItemFirearm {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (player.isSneaking()) {
 			if (!world.isRemote) {
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_SHOTGUN, world, 0, 0, 0);
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_SHOTGUN, world, 0, 0, 0);
 			}
 		} else {
 			player.setActiveHand(hand);

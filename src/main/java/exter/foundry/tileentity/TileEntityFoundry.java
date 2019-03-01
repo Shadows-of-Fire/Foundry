@@ -6,8 +6,6 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
-import exter.foundry.Foundry;
-import exter.foundry.network.MessageTileEntitySync;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -29,7 +27,6 @@ import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -482,24 +479,6 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable,
 			return is;
 		} else {
 			return ItemStack.EMPTY;
-		}
-	}
-
-	protected void sendPacketToNearbyPlayers(NBTTagCompound data) {
-		data.setInteger("dim", world.provider.getDimension());
-		Foundry.NETWORK.sendToAllAround(new MessageTileEntitySync(data), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 192));
-	}
-
-	protected void sendPacketToPlayer(NBTTagCompound data, EntityPlayerMP player) {
-		data.setInteger("dim", world.provider.getDimension());
-		Foundry.NETWORK.sendTo(new MessageTileEntitySync(data), player);
-	}
-
-	protected void sendToServer(NBTTagCompound tag) {
-		if (world.isRemote) {
-			super.writeToNBT(tag);
-			tag.setInteger("dim", world.provider.getDimension());
-			Foundry.NETWORK.sendToServer(new MessageTileEntitySync(tag));
 		}
 	}
 

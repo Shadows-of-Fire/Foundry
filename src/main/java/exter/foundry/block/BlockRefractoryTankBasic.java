@@ -5,7 +5,7 @@ import java.util.Random;
 
 import exter.foundry.Foundry;
 import exter.foundry.creativetab.FoundryTabMachines;
-import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.proxy.FoundryGuiHandler;
 import exter.foundry.tileentity.TileEntityFoundry;
 import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
 import exter.foundry.tileentity.renderer.ISpoutPourDepth;
@@ -126,7 +126,7 @@ public class BlockRefractoryTankBasic extends BlockContainer implements ISpoutPo
 		if (world.isRemote) {
 			return true;
 		} else {
-			player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_REFRACTORYTANK, world, pos.getX(), pos.getY(), pos.getZ());
+			player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_REFRACTORYTANK, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 	}

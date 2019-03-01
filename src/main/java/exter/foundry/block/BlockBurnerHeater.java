@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import exter.foundry.Foundry;
-import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.proxy.FoundryGuiHandler;
 import exter.foundry.tileentity.TileEntityBurnerHeater;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.SoundType;
@@ -48,7 +48,7 @@ public class BlockBurnerHeater extends BlockFoundrySidedMachine {
 		if (world.isRemote) {
 			return true;
 		} else {
-			player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_BURNERHEATER, world, pos.getX(), pos.getY(), pos.getZ());
+			player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_BURNERHEATER, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 	}

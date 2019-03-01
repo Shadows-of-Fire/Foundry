@@ -6,7 +6,7 @@ import java.util.Random;
 import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.creativetab.FoundryTabMachines;
-import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.proxy.FoundryGuiHandler;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
 import exter.foundry.tileentity.TileEntityAlloyingCrucible;
 import exter.foundry.tileentity.TileEntityFoundry;
@@ -242,25 +242,25 @@ public class BlockFoundryMachine extends Block implements ITileEntityProvider, I
 			case CRUCIBLE_BASIC:
 			case CRUCIBLE_STANDARD:
 			case CRUCIBLE_ADVANCED:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			case CASTER:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_CASTER, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_CASTER, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			case ALLOYMIXER:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_ALLOYMIXER, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_ALLOYMIXER, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			case INFUSER:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_INFUSER, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_INFUSER, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			case MATERIALROUTER:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_MATERIALROUTER, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_MATERIALROUTER, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			case ATOMIZER:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_ATOMIZER, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_ATOMIZER, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			case ALLOYING_CRUCIBLE:
-				player.openGui(Foundry.INSTANCE, CommonFoundryProxy.GUI_ALLOYINGCRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Foundry.INSTANCE, FoundryGuiHandler.GUI_ALLOYINGCRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
 				break;
 			default:
 				return false;

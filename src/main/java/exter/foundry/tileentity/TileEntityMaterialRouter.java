@@ -10,7 +10,6 @@ import com.google.common.collect.ImmutableSet;
 
 import exter.foundry.Foundry;
 import exter.foundry.material.MaterialRegistry;
-import exter.foundry.network.MessageTileEntitySync;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

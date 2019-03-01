@@ -49,7 +49,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class CommonFoundryProxy implements IGuiHandler {
+public class FoundryGuiHandler implements IGuiHandler {
+
 	static public final int GUI_CRUCIBLE = 0;
 	static public final int GUI_CASTER = 1;
 	static public final int GUI_ALLOYMIXER = 2;
@@ -170,15 +171,4 @@ public class CommonFoundryProxy implements IGuiHandler {
 		return null;
 	}
 
-	public void init() {
-
-	}
-
-	public void postInit() {
-
-	}
-
-	public void preInit() {
-
-	}
 }

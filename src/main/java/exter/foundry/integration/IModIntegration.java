@@ -19,27 +19,15 @@ public interface IModIntegration {
 	String getModID();
 
 	/**
-	 * Called at the end of {@link Foundry#preInit}, just before proxy preInit.
+	 * Called at the end of {@link Foundry#preInit}.
 	 */
 	default void preInit() {
 	}
 
 	/**
-	 * Called from proxy preInit, very end.  Client-side only.
-	 */
-	default void preInitClient() {
-	}
-
-	/**
-	 * Called at the end of {@link Foundry#init}, just before proxy init.
+	 * Called at the end of {@link Foundry#init}.
 	 */
 	default void init() {
-	}
-
-	/**
-	 * Called from proxy init, very end.  Client-side only.
-	 */
-	default void initClient() {
 	}
 
 	/**
@@ -49,15 +37,9 @@ public interface IModIntegration {
 	}
 
 	/**
-	 * Called at the end of {@link Foundry#postInit}, just before proxy postInit.
+	 * Called at the end of {@link Foundry#postInit}.
 	 */
 	default void postInit() {
-	}
-
-	/**
-	 * Called from proxy postInit, very end.  Client-side only.
-	 */
-	default void postInitClient() {
 	}
 
 	/**

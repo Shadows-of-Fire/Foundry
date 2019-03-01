@@ -20,8 +20,7 @@ import exter.foundry.init.InitRecipes;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
-import exter.foundry.network.MessageTileEntitySync;
-import exter.foundry.proxy.CommonFoundryProxy;
+import exter.foundry.proxy.FoundryGuiHandler;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
 import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
@@ -67,31 +66,23 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Foundry.MODID, name = Foundry.MODNAME, version = Foundry.MODVERSION, dependencies = "required-after:placebo@[1.2.0,);required-after:thermalfoundation;after:jei@[4.12,);after:tconstruct;after:mekanism")
+@Mod(modid = Foundry.MODID, name = Foundry.MODNAME, version = Foundry.MODVERSION, dependencies = "required-after:placebo@[2.0.0,);required-after:thermalfoundation;after:jei@[4.12,);after:tconstruct;after:mekanism")
 public class Foundry {
+
 	public static final String MODID = "foundry";
 	public static final String MODNAME = "Foundry";
-	public static final String MODVERSION = "3.3.5";
-
-	@SidedProxy(clientSide = "exter.foundry.proxy.ClientFoundryProxy", serverSide = "exter.foundry.proxy.CommonFoundryProxy")
-	public static CommonFoundryProxy proxy;
+	public static final String MODVERSION = "4.0.0";
+	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	@Instance
 	public static Foundry INSTANCE = null;
-
-	public static final Logger LOGGER = LogManager.getLogger(MODID);
-
-	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 
 	static {
 		FluidRegistry.enableUniversalBucket();
@@ -128,10 +119,7 @@ public class Foundry {
 
 		FoundryFluids.init();
 
-		NETWORK.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.SERVER);
-		NETWORK.registerMessage(MessageTileEntitySync.Handler.class, MessageTileEntitySync.class, 0, Side.CLIENT);
-
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new FoundryGuiHandler());
 
 		try {
 			File f = new File(WorldProps.worldGenDir, "04_foundry_aluminium.json");
@@ -142,7 +130,6 @@ public class Foundry {
 		}
 
 		ModIntegrationManager.apply(m -> m.preInit());
-		proxy.preInit();
 	}
 
 	@EventHandler
@@ -180,14 +167,12 @@ public class Foundry {
 		EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS).toArray(new Biome[0]));
 
 		ModIntegrationManager.apply(m -> m.init());
-		proxy.init();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		ModIntegrationManager.apply(m -> m.postInitEarly());
 		InitRecipes.postInit();
-		proxy.postInit();
 		ModIntegrationManager.apply(m -> m.postInit());
 	}
 
