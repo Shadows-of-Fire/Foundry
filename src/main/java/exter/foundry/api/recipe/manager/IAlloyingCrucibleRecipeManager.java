@@ -6,23 +6,23 @@ import exter.foundry.api.recipe.IAlloyingCrucibleRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IAlloyingCrucibleRecipeManager {
+
 	/**
 	 * Register an Alloying Crucible recipe.
 	 * @param out Output.
-	 * @param in_a Input A.
-	 * @param in_b Input B.
+	 * @param fluidA Input A.
+	 * @param fluidB Input B.
 	 */
-	public void addRecipe(FluidStack out, FluidStack in_a, FluidStack in_b);
+	public void addRecipe(FluidStack out, FluidStack fluidA, FluidStack fluidB);
 
 	/**
 	 * Find a valid recipe that contains the given inputs.
 	 * A recipe is found if the recipe's inputs contains the fluid in the parameters.
-	 * @param in_a FluidStack for the first input.
-	 * @param in_b FluidStack for the second input.
-	 * @param order [Output] Order in which the input fluids are matched.
+	 * @param fluidA FluidStack for the first input.
+	 * @param fluidB FluidStack for the second input.
 	 * @return
 	 */
-	public IAlloyingCrucibleRecipe findRecipe(FluidStack in_a, FluidStack in_b);
+	public IAlloyingCrucibleRecipe findRecipe(FluidStack fluidA, FluidStack fluidB);
 
 	/**
 	 * Get a list of all the recipes

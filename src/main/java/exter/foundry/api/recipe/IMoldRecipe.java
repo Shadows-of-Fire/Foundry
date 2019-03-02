@@ -3,13 +3,14 @@ package exter.foundry.api.recipe;
 import net.minecraft.item.ItemStack;
 
 public interface IMoldRecipe {
-	public int getHeight();
 
-	public ItemStack getOutput();
+	int getHeight();
 
-	public int[] getRecipeGrid();
+	ItemStack getOutput();
 
-	public int getWidth();
+	int[] getRecipeGrid();
 
-	public boolean matchesRecipe(int[] grid);
+	int getWidth();
+
+	boolean matchesRecipe(int[] grid);
 }

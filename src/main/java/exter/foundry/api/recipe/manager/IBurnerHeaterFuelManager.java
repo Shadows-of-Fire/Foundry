@@ -3,14 +3,14 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.IBurnerHeaterFuel;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 public interface IBurnerHeaterFuelManager {
 
 	public void addFuel(IBurnerHeaterFuel fuel);
 
-	public void addFuel(IItemMatcher item, int burn_time, int heat);
+	public void addFuel(Ingredient item, int burn, int heat);
 
 	public IBurnerHeaterFuel getFuel(ItemStack item);
 

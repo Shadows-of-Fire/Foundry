@@ -3,7 +3,7 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.IAtomizerRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IAtomizerRecipeManager {
@@ -13,7 +13,7 @@ public interface IAtomizerRecipeManager {
 	 * @param result Item produced.
 	 * @param in_fluid Fluid required (fluid type and amount).
 	 */
-	public void addRecipe(IItemMatcher result, FluidStack in_fluid);
+	public void addRecipe(ItemStack result, FluidStack in_fluid);
 
 	/**
 	 * Find an atomizer recipe given a FluidStack.

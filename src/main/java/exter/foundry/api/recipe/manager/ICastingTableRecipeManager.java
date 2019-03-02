@@ -3,7 +3,7 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.ICastingTableRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface ICastingTableRecipeManager {
@@ -14,7 +14,7 @@ public interface ICastingTableRecipeManager {
 	 * @param in_fluid Fluid required (fluid type and amount).
 	 * @param in_type Type of Casting Table required.
 	 */
-	public void addRecipe(IItemMatcher result, FluidStack in_fluid, ICastingTableRecipe.TableType in_type);
+	public void addRecipe(ItemStack result, FluidStack in_fluid, ICastingTableRecipe.TableType in_type);
 
 	/**
 	 * Find a casting recipe given a FluidStack and a mold.

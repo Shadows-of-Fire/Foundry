@@ -3,18 +3,19 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IMeltingRecipeManager {
+
 	/**
 	 * Register a Melting Crucible recipe.
 	 * Uses the fluid's temperature as it's melting point.
 	 * @param solid The item to be melted
 	 * @param fluid_stack Resulting fluid
 	 */
-	public void addRecipe(IItemMatcher solid, FluidStack fluid_stack);
+	public void addRecipe(Ingredient input, FluidStack output);
 
 	/**
 	 * Register a Melting Crucible recipe.
@@ -22,7 +23,7 @@ public interface IMeltingRecipeManager {
 	 * @param fluid_stack Resulting fluid
 	 * @param melting_point Temperature required for the item to melt. Must be >295 and <5000
 	 */
-	public void addRecipe(IItemMatcher solid, FluidStack fluid_stack, int melting_point);
+	public void addRecipe(Ingredient input, FluidStack output, int temp);
 
 	/**
 	 * Register a Melting Crucible recipe.
@@ -31,7 +32,7 @@ public interface IMeltingRecipeManager {
 	 * @param melting_point Temperature required for the item to melt. Must be >295 and <5000
 	 * @param melting_speed. Speed in which the item melts. Default is 100.
 	 */
-	public void addRecipe(IItemMatcher solid, FluidStack fluid_stack, int melting_point, int melting_speed);
+	public void addRecipe(Ingredient input, FluidStack output, int temp, int speed);
 
 	/**
 	 * Find a valid recipe that contains the given item

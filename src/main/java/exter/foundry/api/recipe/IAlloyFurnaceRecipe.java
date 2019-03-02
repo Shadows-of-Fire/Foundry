@@ -1,26 +1,27 @@
 package exter.foundry.api.recipe;
 
-import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 public interface IAlloyFurnaceRecipe {
+
 	/**
 	 * Get the recipe's input A by index.
 	 * @return Recipe's input A.
 	 */
-	public IItemMatcher getInputA();
+	Ingredient getInputA();
 
 	/**
 	 * Get the recipe's input B by index.
 	 * @return Recipe's input B.
 	 */
-	public IItemMatcher getInputB();
+	Ingredient getInputB();
 
 	/**
 	 * Get the recipe's output.
 	 * @return ItemStack containing recipe's output.
 	 */
-	public ItemStack getOutput();
+	ItemStack getOutput();
 
 	/**
 	 * Check if the items matches this recipe.
@@ -28,5 +29,7 @@ public interface IAlloyFurnaceRecipe {
 	 * @param input_b item to compare.
 	 * @return true if the items matches, false otherwise.
 	 */
-	public boolean matchesRecipe(ItemStack input_a, ItemStack input_b);
+	default boolean matchesRecipe(ItemStack inputA, ItemStack inputB) {
+		return getInputA().apply(inputA) && getInputB().apply(inputB);
+	}
 }

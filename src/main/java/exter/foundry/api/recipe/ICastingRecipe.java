@@ -1,53 +1,42 @@
 package exter.foundry.api.recipe;
 
-import exter.foundry.api.recipe.matcher.IItemMatcher;
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface ICastingRecipe {
 
 	/**
-	 * Check if the item stack contains the necessary extra items for this recipe.
-	 * @param stack the stack to check.
-	 * @return true if the stack contains the recipe's extra item requirement.
-	 */
-	public boolean containsExtra(ItemStack stack);
-
-	/**
 	 * Get the casting speed.
 	 * @return The casting speed.
 	 */
-	public int getCastingSpeed();
+	int getCastingSpeed();
 
 	/**
 	 * Get the fluid required for casting.
 	 * @return FluidStack containing the required fluid.
 	 */
-	public FluidStack getInput();
+	FluidStack getInput();
 
 	/**
 	 * Get the extra item required for casting.
-	 * @return Can be an {@link ItemStack} containing the required extra item, a {@link OreStack}, or null if no extra item is required.
+	 * @return The ingredient to match for extra items.  May be {@link Ingredient#EMPTY}
 	 */
-	public IItemMatcher getInputExtra();
+	Ingredient getItemInput();
 
 	/**
 	 * Get the mold required for casting.
-	 * @return ItemStack containing the required mold.
+	 * @return Ingredient matcher for the required mold.
 	 */
-
-	public ItemStack getMold();
+	Ingredient getMold();
 
 	/**
 	 * Get the actual item produced by casting.
 	 * @return ItemStack containing the item produced. Can be null if using an Ore Dictionary name with nothing registered with it.
 	 */
-	public ItemStack getOutput();
-
-	/**
-	 * Get the output's matcher.
-	 */
-	public IItemMatcher getOutputMatcher();
+	ItemStack getOutput();
 
 	/**
 	 * Check if a fluid stack and mold matches this recipe.
@@ -55,10 +44,7 @@ public interface ICastingRecipe {
 	 * @param fluid_stack fluid to check (must contain the fluid in the recipe).
 	 * @return true if the stack and mold matches, false otherwise.
 	 */
-	public boolean matchesRecipe(ItemStack mold_stack, FluidStack fluid_stack, ItemStack extra);
-
-	/**
-	 * Return true if the recipe requires an extra item.
-	 */
-	public boolean requiresExtra();
+	default boolean matchesRecipe(ItemStack mold, @Nonnull FluidStack fluid, ItemStack stack) {
+		return getMold().apply(mold) && fluid.containsFluid(getInput()) && getItemInput().apply(stack);
+	}
 }

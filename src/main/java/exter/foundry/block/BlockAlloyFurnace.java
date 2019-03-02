@@ -39,7 +39,7 @@ public class BlockAlloyFurnace extends BlockFoundrySidedMachine {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new TileEntityAlloyFurnace();
 	}
 
@@ -53,11 +53,10 @@ public class BlockAlloyFurnace extends BlockFoundrySidedMachine {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
-		if (state.getValue(STATE) == EnumMachineState.ON) {
-			EnumMachineFacing facing = state.getValue(FACING);
+		if (state.getValue(ACTIVE)) {
+			EnumFacing facing = state.getValue(FACING);
 			float f = pos.getX() + 0.5F;
 			float f1 = pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
 			float f2 = pos.getZ() + 0.5F;
@@ -81,6 +80,7 @@ public class BlockAlloyFurnace extends BlockFoundrySidedMachine {
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 				world.spawnParticle(EnumParticleTypes.FLAME, f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 				break;
+			default:
 			}
 		}
 	}

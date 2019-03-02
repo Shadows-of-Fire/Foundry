@@ -3,8 +3,8 @@ package exter.foundry.api.recipe.manager;
 import java.util.List;
 
 import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface ICastingRecipeManager {
@@ -13,7 +13,7 @@ public interface ICastingRecipeManager {
 	 * Register an item as a mold. Only registered items are accepted in the Metal Caster's mold slot.
 	 * @param mold Item to be registered.
 	 */
-	public void addMold(ItemStack mold);
+	public void addMold(Ingredient mold);
 
 	/**
 	 * Register a Metal Caster recipe.
@@ -23,7 +23,7 @@ public interface ICastingRecipeManager {
 	 * @param in_mold Mold required.
 	 * @param in_extra Extra item required (null, if no extra item is required).
 	 */
-	public void addRecipe(IItemMatcher result, FluidStack in_fluid, ItemStack in_mold, IItemMatcher in_extra);
+	public void addRecipe(ItemStack result, FluidStack in_fluid, ItemStack in_mold, Ingredient in_extra);
 
 	/**
 	 * Register a Metal Caster recipe.
@@ -33,7 +33,7 @@ public interface ICastingRecipeManager {
 	 * @param in_mold Mold required.
 	 * @param in_extra Extra item required (null, if no extra item is required).
 	 */
-	public void addRecipe(IItemMatcher result, FluidStack in_fluid, ItemStack in_mold, IItemMatcher in_extra, int speed);
+	public void addRecipe(ItemStack result, FluidStack in_fluid, ItemStack in_mold, Ingredient in_extra, int speed);
 
 	/**
 	 * Find a casting recipe given a FluidStack and a mold.

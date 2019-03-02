@@ -1,28 +1,32 @@
 package exter.foundry.api.recipe;
 
+import javax.annotation.Nonnull;
+
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IAlloyingCrucibleRecipe {
 	/**
 	 * Get the recipe's input A.
 	 */
-	public FluidStack getInputA();
+	FluidStack getInputA();
 
 	/**
 	 * Get the recipe's input B.
 	 */
-	public FluidStack getInputB();
+	FluidStack getInputB();
 
 	/**
 	 * Get the recipe's output.
 	 */
-	public FluidStack getOutput();
+	FluidStack getOutput();
 
 	/**
 	 * Check if the fluids matches this recipe.
-	 * @param input_a fluid to compare.
-	 * @param input_b fluid to compare.
+	 * @param fluidA fluid to compare.
+	 * @param fluidB fluid to compare.
 	 * @return true if the fluids matches, false otherwise.
 	 */
-	public boolean matchesRecipe(FluidStack input_a, FluidStack input_b);
+	default boolean matchesRecipe(@Nonnull FluidStack fluidA, @Nonnull FluidStack fluidB) {
+		return fluidA.containsFluid(getInputA()) && fluidB.containsFluid(getInputB());
+	}
 }

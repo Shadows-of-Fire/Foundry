@@ -25,8 +25,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -112,21 +110,12 @@ public class FoundryMiscUtils {
 		return ItemStack.EMPTY;
 	}
 
-	public static boolean isInvalid(IItemMatcher matcher) {
-		if (matcher == null) Foundry.LOGGER.error("Null IItemMatcher! Instance: " + matcher);
-		if (matcher.getItem().isEmpty()) Foundry.LOGGER.error("Invalid IItemMatcher with an empty match stack! Instance: " + matcher);
-		if (matcher.getItems().isEmpty()) Foundry.LOGGER.error("Invalid IItemMatcher with an empty match list! Instance: " + matcher);
-		return matcher == null || matcher.getItem().isEmpty() || matcher.getItems().isEmpty();
-	}
-
-	@SideOnly(Side.CLIENT)
 	static public void localizeTooltip(String key, Object[] formatting, List<String> tooltip) {
 		for (String str : new TextComponentTranslation(key, formatting).getUnformattedText().split("//")) {
 			tooltip.add(TextFormatting.GRAY + str);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	static public void localizeTooltip(String key, List<String> tooltip) {
 		localizeTooltip(key, new Object[0], tooltip);
 	}

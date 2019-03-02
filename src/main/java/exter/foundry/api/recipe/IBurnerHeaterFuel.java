@@ -1,12 +1,12 @@
 package exter.foundry.api.recipe;
 
-import exter.foundry.api.recipe.matcher.IItemMatcher;
+import net.minecraft.item.crafting.Ingredient;
 
 public interface IBurnerHeaterFuel {
 
-	public int getBurnTime();
+	int getBurnTime();
 
-	public IItemMatcher getFuel();
+	Ingredient getFuel();
 
-	public int getHeat();
+	int getHeat();
 }

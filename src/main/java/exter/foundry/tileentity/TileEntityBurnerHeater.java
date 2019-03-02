@@ -25,8 +25,8 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.api.item.IExoflameHeatable;
 
-@Optional.Interface(iface = "vazkii.botania.api.item.IExoflameHeatable", modid = "Botania")
 public class TileEntityBurnerHeater extends TileEntityFoundry implements IExoflameHeatable {
+
 	private class HeatProvider implements IHeatProvider {
 		@Override
 		public int provideHeat(int max_heat) {
@@ -56,9 +56,6 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 	}
 
 	private static int DEFAULT_HEAT_PROVIDE = TileEntityFoundryHeatable.getMaxHeatRecieve(FoundryAPI.CRUCIBLE_BASIC_MAX_TEMP, FoundryAPI.CRUCIBLE_BASIC_TEMP_LOSS_RATE);
-	static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of(0, 1, 2, 3);
-	static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of();
-	static private final Set<Integer> IH_SLOTS_FUEL = ImmutableSet.of(0, 1, 2, 3);
 
 	private int burn_time;
 	private int item_burn_time;
@@ -78,7 +75,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 		item_handler = new ItemHandlerFuel(this, getSizeInventory(), IH_SLOTS_INPUT, IH_SLOTS_OUTPUT, IH_SLOTS_FUEL);
 	}
 
-	@Optional.Method(modid = "Botania")
+
 	@Override
 	public void boostBurnTime() {
 		if (!world.isRemote) {
@@ -90,28 +87,22 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 		}
 	}
 
-	@Optional.Method(modid = "Botania")
+
 	@Override
 	public void boostCookTime() {
 
 	}
 
-	@Optional.Method(modid = "Botania")
+
 	@Override
 	public boolean canSmelt() {
 		return true;
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer player) {
-
 	}
 
 	public int getBurningTime() {
 		return burn_time;
 	}
 
-	@Optional.Method(modid = "Botania")
 	@Override
 	public int getBurnTime() {
 		return burn_time <= 1 ? 0 : burn_time - 1;
@@ -119,7 +110,7 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 
 	@Override
 	public <T> T getCapability(Capability<T> cap, EnumFacing facing) {
-		if (cap == FoundryAPI.HEAT_PROVIDER_CAP && facing == EnumFacing.UP) { return FoundryAPI.HEAT_PROVIDER_CAP.cast(heat_provider); }
+		if (cap == FoundryAPI.HEAT_PROVIDER_CAP && facing == EnumFacing.UP) return FoundryAPI.HEAT_PROVIDER_CAP.cast(heat_provider);
 		return super.getCapability(cap, facing);
 	}
 
