@@ -1,34 +1,37 @@
 package exter.foundry.recipes;
 
+import com.google.common.base.Preconditions;
+
 import exter.foundry.api.recipe.IBurnerHeaterFuel;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
+import net.minecraft.item.crafting.Ingredient;
 
 public class BurnerHeaterFuel implements IBurnerHeaterFuel {
-	public final int burn_time;
-	public final int heat;
 
-	public final IItemMatcher fuel;
+	protected final Ingredient fuel;
+	protected final int burnTime;
+	protected final int heat;
 
-	public BurnerHeaterFuel(IItemMatcher fuel, int burn_time, int heat) {
-		if (burn_time < 1) throw new IllegalArgumentException("Fuel burn time must be > 0.");
-		if (heat < 1) throw new IllegalArgumentException("Fuel heat must be > 0.");
-		this.fuel = fuel;
-		this.burn_time = burn_time;
+	public BurnerHeaterFuel(Ingredient fuel, int burnTime, int heat) {
+		this.fuel = Preconditions.checkNotNull(fuel, "Burner Heater Fuel input may not be null.");
+		Preconditions.checkArgument(burnTime > 0, "Burner Heater Fuel time must be positive.");
+		Preconditions.checkArgument(heat > 0, "Burner Heater Fuel heat must be positive.");
+		this.burnTime = burnTime;
 		this.heat = heat;
 	}
 
 	@Override
-	public int getBurnTime() {
-		return burn_time;
+	public Ingredient getFuel() {
+		return fuel;
 	}
 
 	@Override
-	public IItemMatcher getFuel() {
-		return fuel;
+	public int getBurnTime() {
+		return burnTime;
 	}
 
 	@Override
 	public int getHeat() {
 		return heat;
 	}
+
 }

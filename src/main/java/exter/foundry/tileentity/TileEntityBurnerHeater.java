@@ -1,9 +1,5 @@
 package exter.foundry.tileentity;
 
-import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
-
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.heatable.IHeatProvider;
 import exter.foundry.api.recipe.IBurnerHeaterFuel;
@@ -12,7 +8,6 @@ import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
 import exter.foundry.tileentity.itemhandler.ItemHandlerFuel;
 import exter.foundry.util.FoundryMiscUtils;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -20,8 +15,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.api.item.IExoflameHeatable;
 
@@ -75,7 +68,6 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 		item_handler = new ItemHandlerFuel(this, getSizeInventory(), IH_SLOTS_INPUT, IH_SLOTS_OUTPUT, IH_SLOTS_FUEL);
 	}
 
-
 	@Override
 	public void boostBurnTime() {
 		if (!world.isRemote) {
@@ -87,12 +79,10 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 		}
 	}
 
-
 	@Override
 	public void boostCookTime() {
 
 	}
-
 
 	@Override
 	public boolean canSmelt() {
@@ -114,11 +104,6 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 		return super.getCapability(cap, facing);
 	}
 
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
 	public int getItemBurnTime() {
 		return item_burn_time;
 	}
@@ -129,47 +114,12 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 	}
 
 	@Override
-	public int getSizeInventory() {
-		return 4;
-	}
-
-	@Override
-	public FluidTank getTank(int slot) {
-		return null;
-	}
-
-	@Override
-	public int getTankCount() {
-		return 0;
-	}
-
-	@Override
 	public boolean hasCapability(Capability<?> cap, EnumFacing facing) {
 		return super.hasCapability(cap, facing) || cap == FoundryAPI.HEAT_PROVIDER_CAP && facing == EnumFacing.UP;
 	}
 
 	public boolean isBurning() {
 		return burn_time > 0;
-	}
-
-	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return TileEntityFurnace.isItemFuel(stack);
-	}
-
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer) {
-		return world.getTileEntity(getPos()) != this ? false : par1EntityPlayer.getDistanceSq(getPos()) <= 64.0D;
-	}
-
-	@Override
-	protected void onInitialize() {
-
-	}
-
-	@Override
-	public void openInventory(EntityPlayer player) {
-
 	}
 
 	@Override
@@ -192,11 +142,6 @@ public class TileEntityBurnerHeater extends TileEntityFoundry implements IExofla
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
 		return oldState.getBlock() != newSate.getBlock();
-	}
-
-	@Override
-	protected void updateClient() {
-
 	}
 
 	@Override

@@ -1,70 +1,44 @@
 package exter.foundry.recipes;
 
+import com.google.common.base.Preconditions;
+
 import exter.foundry.api.recipe.IInfuserRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
-/**
- * Metal Infuser recipe manager
- */
 public class InfuserRecipe implements IInfuserRecipe {
 
-	/**
-	 * Required fluid.
-	 */
-	public final FluidStack fluid;
+	protected final Ingredient input;
+	protected final FluidStack inFluid;
+	protected final FluidStack output;
+	protected final int energy;
 
-	/**
-	 * Item required.
-	 */
-	public final IItemMatcher item;
-
-	/**
-	 * Amount of energy needed to extract.
-	 */
-	public final int extract_energy;
-
-	/**
-	 * Fluid produced.
-	 */
-	public final FluidStack output;
-
-	public InfuserRecipe(FluidStack result, FluidStack in_fluid, IItemMatcher in_item, int energy) {
-		if (energy < 1) throw new IllegalArgumentException("Infuser substance recipe energy nust be > 0.");
-		if (in_fluid == null) throw new IllegalArgumentException("Infuser recipe input fluid cannot be null!");
-		if (result == null) throw new IllegalArgumentException("Infuser recipe output cannot be null!");
-		if (in_item == null) throw new IllegalArgumentException("Infuser Recipe input item cannot be null!");
-
-		item = in_item;
-		fluid = in_fluid.copy();
-		extract_energy = energy;
-		output = result.copy();
+	public InfuserRecipe(Ingredient input, FluidStack inFluid, FluidStack output, int energy) {
+		this.input = Preconditions.checkNotNull(input, "Infuser Recipe input may not be null.");
+		this.inFluid = Preconditions.checkNotNull(inFluid, "Infuser Recipe input fluid may not be null.");
+		this.output = Preconditions.checkNotNull(output, "Infuser Recipe output may not be null.");
+		Preconditions.checkArgument(energy > 0, "Infuse Recipe energy cost must be positive.");
+		this.energy = energy;
 	}
 
 	@Override
-	public int getEnergyNeeded() {
-		return extract_energy;
-	}
-
-	@Override
-	public IItemMatcher getInput() {
-		return item;
+	public Ingredient getInput() {
+		return input;
 	}
 
 	@Override
 	public FluidStack getInputFluid() {
-		return fluid.copy();
+		return inFluid;
 	}
 
 	@Override
 	public FluidStack getOutput() {
-		return output.copy();
+		return output;
 	}
 
 	@Override
-	public boolean matchesRecipe(FluidStack in_fluid, ItemStack item_stack) {
-		return item.apply(item_stack) && in_fluid.containsFluid(fluid);
+	public int getEnergyCost() {
+		return energy;
 	}
 
 }

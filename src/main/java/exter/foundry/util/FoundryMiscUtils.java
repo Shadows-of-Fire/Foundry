@@ -7,8 +7,6 @@ import java.util.Set;
 import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.FoundryUtils;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
-import exter.foundry.api.recipe.matcher.ItemStackMatcher;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemMold;
 import exter.foundry.recipes.manager.CastingRecipeManager;
@@ -16,6 +14,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -124,16 +123,15 @@ public class FoundryMiscUtils {
 		registerCasting(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold_meta, null);
 	}
 
-	static public void registerCasting(ItemStack item, Fluid liquid_metal, int ingots, ItemMold.SubItem mold_meta, IItemMatcher extra) {
+	static public void registerCasting(ItemStack item, Fluid liquid_metal, int ingots, ItemMold.SubItem mold_meta, Ingredient extra) {
 		registerCasting(item, new FluidStack(liquid_metal, FoundryAPI.FLUID_AMOUNT_INGOT * ingots), mold_meta, extra);
 	}
 
-	static public void registerCasting(ItemStack item, FluidStack fluid, ItemMold.SubItem mold_meta, IItemMatcher extra) {
+	static public void registerCasting(ItemStack item, FluidStack fluid, ItemMold.SubItem mold_meta, Ingredient extra) {
 		if (!item.isEmpty()) {
 			ItemStack mold = FoundryItems.mold(mold_meta);
-			ItemStack extra_item = extra != null ? extra.getItem() : ItemStack.EMPTY;
-			if (CastingRecipeManager.INSTANCE.findRecipe(new FluidStack(fluid.getFluid(), FoundryAPI.CASTER_TANK_CAPACITY), mold, extra_item) == null) {
-				CastingRecipeManager.INSTANCE.addRecipe(new ItemStackMatcher(item), fluid, mold, extra);
+			if (CastingRecipeManager.INSTANCE.findRecipe(new FluidStack(fluid.getFluid(), FoundryAPI.CASTER_TANK_CAPACITY), mold, extra.getMatchingStacks()[0]) == null) {
+				CastingRecipeManager.INSTANCE.addRecipe(item, fluid, mold, extra);
 			}
 		} else Foundry.LOGGER.error("Attempted to add a casting recipe with an invalid output!  Item: {}, Fluid: {}, Mold: {}, Extra: {}", item, fluid, mold_meta, extra);
 	}

@@ -1,72 +1,44 @@
 package exter.foundry.recipes;
 
+import com.google.common.base.Preconditions;
+
 import exter.foundry.api.recipe.IMeltingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
-import exter.foundry.integration.minetweaker.MTHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
-/**
- * Metal Smelter recipe manager
- */
 public class MeltingRecipe implements IMeltingRecipe {
-	/**
-	 * Produced fluid and amount.
-	 */
-	private final FluidStack fluid;
 
-	/**
-	 * Item required.
-	 * It can be an {@link ItemStack} of the item or a @{link String} of it's Ore Dictionary name.
-	 */
-	private final IItemMatcher solid;
+	protected final Ingredient input;
+	protected final FluidStack output;
+	protected final int temp;
+	protected final int speed;
 
-	/**
-	 * Melting point of the item in K.
-	 */
-	private final int melting_point;
-
-	private final int melting_speed;
-
-	public MeltingRecipe(IItemMatcher item, FluidStack fluid_stack, int melt, int speed) {
-
-		if (fluid_stack == null) throw new IllegalArgumentException("Melting recipe fluid cannot be null.");
-		if (melt <= 295) melt = 296; //throw new IllegalArgumentException("Melting recipe melting point must be > 295.");
-		if (speed < 1) melt = 1; //throw new IllegalArgumentException("Melting recipe speed must be > 0.");
-
-		solid = item;
-		fluid = fluid_stack.copy();
-		melting_point = melt;
-		melting_speed = speed;
+	public MeltingRecipe(Ingredient input, FluidStack output, int temp, int speed) {
+		this.input = Preconditions.checkNotNull(input, "Melting Recipe input cannot be null.");
+		this.output = Preconditions.checkNotNull(output, "Melting Recipe output cannot be null.");
+		Preconditions.checkArgument(temp > 295, "Melting Recipe temp must be greater than 295.");
+		Preconditions.checkArgument(speed > 0, "Melting Recipe speed must be positive.");
+		this.temp = temp;
+		this.speed = speed;
 	}
 
 	@Override
-	public IItemMatcher getInput() {
-		return solid;
+	public Ingredient getInput() {
+		return input;
 	}
 
 	@Override
 	public int getMeltingPoint() {
-		return melting_point;
+		return temp;
 	}
 
 	@Override
 	public int getMeltingSpeed() {
-		return melting_speed;
+		return speed;
 	}
 
 	@Override
 	public FluidStack getOutput() {
-		return fluid.copy();
-	}
-
-	@Override
-	public boolean matchesRecipe(ItemStack item) {
-		return solid.apply(item);
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Melting recipe: %s -> %s", MTHelper.getItemDescription(solid), MTHelper.getFluidDescription(fluid));
+		return output;
 	}
 }
