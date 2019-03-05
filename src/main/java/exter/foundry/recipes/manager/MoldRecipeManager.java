@@ -2,45 +2,37 @@ package exter.foundry.recipes.manager;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
 import exter.foundry.api.recipe.IMoldRecipe;
-import exter.foundry.api.recipe.manager.IMoldRecipeManager;
 import exter.foundry.recipes.MoldRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-public class MoldRecipeManager implements IMoldRecipeManager {
-	public static final MoldRecipeManager INSTANCE = new MoldRecipeManager();
+public class MoldRecipeManager {
 
-	private final NonNullList<IMoldRecipe> recipes;
-
-	private MoldRecipeManager() {
-		recipes = NonNullList.create();
-	}
+	private static final NonNullList<IMoldRecipe> RECIPES = NonNullList.create();
 
 	public void addRecipe(IMoldRecipe recipe) {
-		recipes.add(recipe);
+		RECIPES.add(recipe);
 	}
 
-	@Override
 	public void addRecipe(ItemStack result, int width, int height, int[] recipe) {
-		recipes.add(new MoldRecipe(result, width, height, recipe));
+		RECIPES.add(new MoldRecipe(result, width, height, recipe));
 	}
 
-	@Override
 	public IMoldRecipe findRecipe(int[] grid) {
-		for (IMoldRecipe r : recipes) {
+		for (IMoldRecipe r : RECIPES) {
 			if (r.matchesRecipe(grid)) { return r; }
 		}
 		return null;
 	}
 
-	@Override
 	public List<IMoldRecipe> getRecipes() {
-		return recipes;
+		return ImmutableList.copyOf(RECIPES);
 	}
 
-	@Override
 	public void removeRecipe(IMoldRecipe recipe) {
-		recipes.remove(recipe);
+		RECIPES.remove(recipe);
 	}
 }

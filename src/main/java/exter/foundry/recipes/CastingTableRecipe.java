@@ -12,7 +12,7 @@ public class CastingTableRecipe implements ICastingTableRecipe {
 	protected final ItemStack output;
 	protected final TableType type;
 
-	public CastingTableRecipe(FluidStack input, ItemStack output, TableType type) {
+	public CastingTableRecipe(ItemStack output, FluidStack input, TableType type) {
 		this.input = Preconditions.checkNotNull(input, "Casting Table Recipe input may not be null.");
 		this.output = Preconditions.checkNotNull(output, "Casting Table Recipe output may not be null.");
 		this.type = Preconditions.checkNotNull(type, "Casting Table Recipe type may not be null.");

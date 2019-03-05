@@ -51,12 +51,12 @@ public class MoldRecipe implements IMoldRecipe {
 
 	@Override
 	public ItemStack getOutput() {
-		return output.copy();
+		return output;
 	}
 
 	@Override
 	public int[] getRecipeGrid() {
-		return recipe.clone();
+		return recipe;
 	}
 
 	@Override

@@ -2,61 +2,41 @@ package exter.foundry.recipes.manager;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.collect.ImmutableList;
+
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
-import exter.foundry.api.recipe.manager.IAlloyMixerRecipeManager;
 import exter.foundry.recipes.AlloyMixerRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
 
-public class AlloyMixerRecipeManager implements IAlloyMixerRecipeManager {
-	public static final AlloyMixerRecipeManager INSTANCE = new AlloyMixerRecipeManager();
+public class AlloyMixerRecipeManager {
 
-	private final NonNullList<IAlloyMixerRecipe> recipes;
+	private static final NonNullList<IAlloyMixerRecipe> RECIPES = NonNullList.create();
 
-	private final int[] recipe_order;
-
-	private AlloyMixerRecipeManager() {
-		recipes = NonNullList.create();
-		recipe_order = new int[4];
+	public static void addRecipe(IAlloyMixerRecipe recipe) {
+		RECIPES.add(recipe);
 	}
 
-	@Override
-	public void addRecipe(FluidStack out, FluidStack... in) {
-		recipes.add(new AlloyMixerRecipe(out, in));
+	public static void addRecipe(FluidStack out, FluidStack... in) {
+		RECIPES.add(new AlloyMixerRecipe(out, in));
 	}
 
-	public void addRecipe(IAlloyMixerRecipe recipe) {
-		recipes.add(recipe);
-	}
-
-	@Override
-	public IAlloyMixerRecipe findRecipe(FluidStack[] in, int[] order) {
-		int inputs = 0;
-		IAlloyMixerRecipe result = null;
-		if (order != null && order.length < 4) {
-			order = null;
+	public static Pair<IAlloyMixerRecipe, int[]> findRecipe(FluidStack[] in) {
+		for (IAlloyMixerRecipe r : RECIPES) {
+			int[] matched = r.matchesRecipe(in);
+			if (matched != null) return Pair.of(r, matched);
 		}
-		for (IAlloyMixerRecipe r : recipes) {
-			List<FluidStack> rinputs = r.getInputs();
-			if (r.matchesRecipe(in, recipe_order) && rinputs.size() > inputs) {
-				if (order != null) {
-					System.arraycopy(recipe_order, 0, order, 0, recipe_order.length);
-				}
-				inputs = rinputs.size();
-				result = r;
-			}
-		}
-		return result;
+		return null;
 	}
 
-	@Override
-	public List<IAlloyMixerRecipe> getRecipes() {
-		return recipes;
+	public static List<IAlloyMixerRecipe> getRecipes() {
+		return ImmutableList.copyOf(RECIPES);
 	}
 
-	@Override
-	public void removeRecipe(IAlloyMixerRecipe recipe) {
-		recipes.remove(recipe);
+	public static void removeRecipe(IAlloyMixerRecipe recipe) {
+		RECIPES.remove(recipe);
 	}
 
 }

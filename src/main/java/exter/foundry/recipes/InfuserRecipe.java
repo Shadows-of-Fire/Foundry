@@ -13,7 +13,7 @@ public class InfuserRecipe implements IInfuserRecipe {
 	protected final FluidStack output;
 	protected final int energy;
 
-	public InfuserRecipe(Ingredient input, FluidStack inFluid, FluidStack output, int energy) {
+	public InfuserRecipe(FluidStack output, Ingredient input, FluidStack inFluid, int energy) {
 		this.input = Preconditions.checkNotNull(input, "Infuser Recipe input may not be null.");
 		this.inFluid = Preconditions.checkNotNull(inFluid, "Infuser Recipe input fluid may not be null.");
 		this.output = Preconditions.checkNotNull(output, "Infuser Recipe output may not be null.");

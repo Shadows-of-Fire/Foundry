@@ -15,7 +15,7 @@ public class CastingRecipe implements ICastingRecipe {
 	protected final ItemStack output;
 	protected final int speed;
 
-	public CastingRecipe(FluidStack input, Ingredient item, Ingredient mold, ItemStack output, int speed) {
+	public CastingRecipe(ItemStack output, FluidStack input, Ingredient item, Ingredient mold, int speed) {
 		this.input = Preconditions.checkNotNull(input, "Casting Recipe input may not be null.");
 		this.item = Preconditions.checkNotNull(item, "Casting Recipe item input may not be null.");
 		this.mold = Preconditions.checkNotNull(mold, "Casting Recipe mold may not be null.");

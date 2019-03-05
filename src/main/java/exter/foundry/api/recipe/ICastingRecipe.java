@@ -1,7 +1,5 @@
 package exter.foundry.api.recipe;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
@@ -44,7 +42,7 @@ public interface ICastingRecipe {
 	 * @param fluid_stack fluid to check (must contain the fluid in the recipe).
 	 * @return true if the stack and mold matches, false otherwise.
 	 */
-	default boolean matchesRecipe(ItemStack mold, @Nonnull FluidStack fluid, ItemStack stack) {
-		return getMold().apply(mold) && fluid.containsFluid(getInput()) && getItemInput().apply(stack);
+	default boolean matchesRecipe(FluidStack input, ItemStack item, ItemStack mold) {
+		return getMold().apply(mold) && input.containsFluid(getInput()) && getItemInput().apply(item);
 	}
 }

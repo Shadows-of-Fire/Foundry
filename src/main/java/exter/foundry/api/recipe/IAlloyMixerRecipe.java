@@ -22,10 +22,10 @@ public interface IAlloyMixerRecipe {
 	 * Check if a list of fluid stacks matches this recipe.
 	 * @param in list of fluid stack to compare.
 	 * @param order [Output] Order in which the input fluids are matched.
-	 * @return true if the fluids matches, false otherwise.
+	 * @return true The int order of the fluids that matched, or null, if the match failed.
 	 */
-	default boolean matchesRecipe(FluidStack[] inputs) {
-		if (inputs.length != getInputs().length) return false;
+	default int[] matchesRecipe(FluidStack[] inputs) {
+		if (inputs.length != getInputs().length) return null;
 
 		IntList matched = new IntArrayList();
 		boolean[] used = new boolean[inputs.length];
@@ -37,6 +37,6 @@ public interface IAlloyMixerRecipe {
 				}
 			}
 		}
-		return matched.size() == getInputs().length;
+		return matched.size() == getInputs().length ? matched.toIntArray() : null;
 	}
 }

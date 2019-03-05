@@ -1,43 +1,35 @@
 package exter.foundry.recipes;
 
+import com.google.common.base.Preconditions;
+
 import exter.foundry.api.recipe.IAlloyingCrucibleRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
-/*
- * Alloying Crucible recipe manager
- */
 public class AlloyingCrucibleRecipe implements IAlloyingCrucibleRecipe {
 
-	public FluidStack input_a;
-	public FluidStack input_b;
-	public FluidStack output;
+	protected final FluidStack inputA;
+	protected final FluidStack inputB;
+	protected final FluidStack output;
 
-	public AlloyingCrucibleRecipe(FluidStack out, FluidStack in_a, FluidStack in_b) {
-		if (out == null) { throw new IllegalArgumentException("Alloy crucble recipe output cannot be null"); }
-		if (in_a == null) { throw new IllegalArgumentException("Alloying crucble recipe input A cannot be null"); }
-		if (in_b == null) { throw new IllegalArgumentException("Alloying crucble recipe input B cannot be null"); }
-		output = out.copy();
-		input_a = in_a.copy();
-		input_b = in_b.copy();
+	public AlloyingCrucibleRecipe(FluidStack output, FluidStack inputA, FluidStack inputB) {
+		this.inputA = Preconditions.checkNotNull(inputA, "Alloying Crucible Recipe input may not be null.");
+		this.inputB = Preconditions.checkNotNull(inputB, "Alloying Crucible Recipe input may not be null.");
+		this.output = Preconditions.checkNotNull(output, "Alloying Crucible Recipe output may not be null.");
 	}
 
 	@Override
 	public FluidStack getInputA() {
-		return input_a.copy();
+		return inputA;
 	}
 
 	@Override
 	public FluidStack getInputB() {
-		return input_b.copy();
+		return inputB;
 	}
 
 	@Override
 	public FluidStack getOutput() {
-		return output.copy();
+		return output;
 	}
 
-	@Override
-	public boolean matchesRecipe(FluidStack in_a, FluidStack in_b) {
-		return in_a != null && in_b != null && in_a.containsFluid(input_a) && in_b.containsFluid(input_b);
-	}
 }

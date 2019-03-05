@@ -1,43 +1,36 @@
 package exter.foundry.recipes;
 
-import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
-import net.minecraft.item.ItemStack;
+import com.google.common.base.Preconditions;
 
-/*
- * Alloy Mixer recipe manager
- */
+import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+
 public class AlloyFurnaceRecipe implements IAlloyFurnaceRecipe {
 
-	public IItemMatcher input_a;
-	public IItemMatcher input_b;
-	public ItemStack output;
+	protected final Ingredient inA;
+	protected final Ingredient inB;
+	protected final ItemStack output;
 
-	public AlloyFurnaceRecipe(ItemStack out, IItemMatcher in_a, IItemMatcher in_b) {
-		if (out.isEmpty()) { throw new IllegalArgumentException("Alloy recipe output cannot be empty"); }
-		output = out.copy();
-
-		input_a = in_a;
-		input_b = in_b;
+	public AlloyFurnaceRecipe(ItemStack output, Ingredient inA, Ingredient inB) {
+		this.inA = Preconditions.checkNotNull(inA, "Alloy Furnace Recipe input may not be null.");
+		this.inB = Preconditions.checkNotNull(inB, "Alloy Furnace Recipe input may not be null.");
+		this.output = Preconditions.checkNotNull(output, "Alloy Furnace Recipe output may not be null.");
 	}
 
 	@Override
-	public IItemMatcher getInputA() {
-		return input_a;
+	public Ingredient getInputA() {
+		return inA;
 	}
 
 	@Override
-	public IItemMatcher getInputB() {
-		return input_b;
+	public Ingredient getInputB() {
+		return inB;
 	}
 
 	@Override
 	public ItemStack getOutput() {
-		return output.copy();
+		return output;
 	}
 
-	@Override
-	public boolean matchesRecipe(ItemStack in_a, ItemStack in_b) {
-		return input_a.apply(in_a) && input_b.apply(in_b);
-	}
 }

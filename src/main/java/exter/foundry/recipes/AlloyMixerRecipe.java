@@ -1,74 +1,31 @@
 package exter.foundry.recipes;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.google.common.base.Preconditions;
 
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
-/*
- * Alloy Mixer recipe manager
- */
 public class AlloyMixerRecipe implements IAlloyMixerRecipe {
 
-	static private final boolean[] matched = new boolean[4];
-	public List<FluidStack> inputs;
+	protected final FluidStack[] input;
+	protected final FluidStack output;
 
-	public FluidStack output;
-
-	public AlloyMixerRecipe(FluidStack out, FluidStack[] in) {
-		output = out.copy();
-		if (in == null) { throw new IllegalArgumentException("Alloy mixer recipe inputs cannot be null"); }
-		if (in.length > 4) { throw new IllegalArgumentException("Alloy mixer recipe cannot have more the 4 inputs"); }
-		inputs = new ArrayList<>();
-		int i;
-		for (i = 0; i < in.length; i++) {
-			if (in[i] == null) { throw new IllegalArgumentException("Alloy mixer recipe input cannot be null"); }
-			inputs.add(in[i].copy());
-		}
-		inputs = Collections.unmodifiableList(inputs);
+	public AlloyMixerRecipe(FluidStack output, FluidStack... input) {
+		this.input = Preconditions.checkNotNull(input, "Alloy Mixer Recipe input may not be null.");
+		this.output = Preconditions.checkNotNull(output, "Alloy Mixer Recipe output may not be null.");
+		Preconditions.checkArgument(input.length <= 4, "Alloy Mixer recipes do not support more than 4 inputs!");
+		for (FluidStack f : input)
+			Preconditions.checkNotNull(f, "Alloy Mixer Recipe input may not be null.");
 	}
 
 	@Override
-	public List<FluidStack> getInputs() {
-		return inputs;
+	public FluidStack[] getInputs() {
+		return input;
 	}
 
 	@Override
 	public FluidStack getOutput() {
-		return output.copy();
+		return output;
 	}
 
-	@Override
-	public boolean matchesRecipe(FluidStack[] in, int[] order) {
-		int matches = 0;
-		int i;
-		if (order != null && order.length < inputs.size()) {
-			order = null;
-		}
-
-		if (in.length < inputs.size()) { return false; }
-
-		for (i = 0; i < 4; i++) {
-			matched[i] = false;
-		}
-
-		for (i = 0; i < in.length; i++) {
-			if (in[i] != null) {
-				int j;
-				for (j = 0; j < inputs.size(); j++) {
-					if (!matched[j] && in[i].containsFluid(inputs.get(j))) {
-						matched[j] = true;
-						matches++;
-						if (order != null) {
-							order[j] = i;
-						}
-						break;
-					}
-				}
-			}
-		}
-		return matches == inputs.size();
-	}
 }

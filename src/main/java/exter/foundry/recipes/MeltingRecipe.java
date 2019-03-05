@@ -13,7 +13,7 @@ public class MeltingRecipe implements IMeltingRecipe {
 	protected final int temp;
 	protected final int speed;
 
-	public MeltingRecipe(Ingredient input, FluidStack output, int temp, int speed) {
+	public MeltingRecipe(FluidStack output, Ingredient input, int temp, int speed) {
 		this.input = Preconditions.checkNotNull(input, "Melting Recipe input cannot be null.");
 		this.output = Preconditions.checkNotNull(output, "Melting Recipe output cannot be null.");
 		Preconditions.checkArgument(temp > 295, "Melting Recipe temp must be greater than 295.");

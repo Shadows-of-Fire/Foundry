@@ -114,18 +114,6 @@ public class FoundryAPI {
 	public static int CRUCIBLE_STANDARD_MAX_TEMP = 250000;
 	public static int CRUCIBLE_ADVANCED_MAX_TEMP = 400000;
 
-	//These fields are set by Foundry during it's preInit phase.
-	public static IMeltingRecipeManager MELTING_MANAGER;
-	public static ICastingRecipeManager CASTING_MANAGER;
-	public static ICastingTableRecipeManager CASTING_TABLE_MANAGER;
-	public static IAlloyMixerRecipeManager ALLOY_MIXER_MANAGER;
-	public static IAlloyingCrucibleRecipeManager ALLOYING_CRUCIBLE_MANAGER;
-	public static IInfuserRecipeManager INFUSER_MANAGER;
-	public static IAlloyFurnaceRecipeManager ALLOY_FURNACE_MANAGER;
-	public static IAtomizerRecipeManager ATOMIZER_MANAGER;
-	public static IMoldRecipeManager MOLD_MANAGER;
-	public static IBurnerHeaterFuelManager BURNER_HEATER_FUEL;
-
 	public static IMaterialRegistry MATERIALS;
 	public static IFluidRegistry FLUIDS;
 

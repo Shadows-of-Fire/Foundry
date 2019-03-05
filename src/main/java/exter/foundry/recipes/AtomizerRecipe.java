@@ -11,7 +11,7 @@ public class AtomizerRecipe implements IAtomizerRecipe {
 	protected final FluidStack input;
 	protected final ItemStack output;
 
-	public AtomizerRecipe(FluidStack input, ItemStack output) {
+	public AtomizerRecipe(ItemStack output, FluidStack input) {
 		this.input = Preconditions.checkNotNull(input, "Atomizer Recipe input may not be null.");
 		this.output = Preconditions.checkNotNull(output, "Atomizer Recipe output may not be null.");
 	}

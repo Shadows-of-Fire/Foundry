@@ -2,45 +2,37 @@ package exter.foundry.recipes.manager;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
 import exter.foundry.api.recipe.IAlloyingCrucibleRecipe;
-import exter.foundry.api.recipe.manager.IAlloyingCrucibleRecipeManager;
 import exter.foundry.recipes.AlloyingCrucibleRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
 
-public class AlloyingCrucibleRecipeManager implements IAlloyingCrucibleRecipeManager {
-	public static final AlloyingCrucibleRecipeManager INSTANCE = new AlloyingCrucibleRecipeManager();
+public class AlloyingCrucibleRecipeManager {
 
-	private final NonNullList<IAlloyingCrucibleRecipe> recipes;
+	private static final NonNullList<IAlloyingCrucibleRecipe> RECIPES = NonNullList.create();
 
-	private AlloyingCrucibleRecipeManager() {
-		recipes = NonNullList.create();
+	public static void addRecipe(IAlloyingCrucibleRecipe recipe) {
+		RECIPES.add(recipe);
 	}
 
-	@Override
-	public void addRecipe(FluidStack out, FluidStack in_a, FluidStack in_b) {
-		recipes.add(new AlloyingCrucibleRecipe(out, in_a, in_b));
+	public static void addRecipe(FluidStack out, FluidStack in_a, FluidStack in_b) {
+		RECIPES.add(new AlloyingCrucibleRecipe(out, in_a, in_b));
 	}
 
-	public void addRecipe(IAlloyingCrucibleRecipe recipe) {
-		recipes.add(recipe);
-	}
-
-	@Override
-	public IAlloyingCrucibleRecipe findRecipe(FluidStack in_a, FluidStack in_b) {
-		for (IAlloyingCrucibleRecipe r : recipes) {
+	public static IAlloyingCrucibleRecipe findRecipe(FluidStack in_a, FluidStack in_b) {
+		for (IAlloyingCrucibleRecipe r : RECIPES) {
 			if (r.matchesRecipe(in_a, in_b)) { return r; }
 		}
 		return null;
 	}
 
-	@Override
-	public List<IAlloyingCrucibleRecipe> getRecipes() {
-		return recipes;
+	public static List<IAlloyingCrucibleRecipe> getRecipes() {
+		return ImmutableList.copyOf(RECIPES);
 	}
 
-	@Override
-	public void removeRecipe(IAlloyingCrucibleRecipe recipe) {
-		recipes.remove(recipe);
+	public static void removeRecipe(IAlloyingCrucibleRecipe recipe) {
+		RECIPES.remove(recipe);
 	}
 }
