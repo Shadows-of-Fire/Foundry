@@ -3,8 +3,6 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IMeltingRecipe;
@@ -27,19 +25,20 @@ import mezz.jei.gui.elements.DrawableResource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import shadows.placebo.util.PlaceboUtil;
 
 public class MeltingJEI {
 
 	static public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation backgroundLocation;
-		@Nonnull
+
 		protected final IDrawableAnimated arrow;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
-		@Nonnull
+
 		private final IDrawable tank_overlay;
 
 		public Category(IJeiHelpers helpers) {
@@ -62,7 +61,7 @@ public class MeltingJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -87,7 +86,6 @@ public class MeltingJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return FoundryJEIConstants.MELT_UID;
@@ -134,7 +132,7 @@ public class MeltingJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(VanillaTypes.ITEM, Collections.singletonList(recipe.getInput().getItems()));
+			ingredients.setInputs(VanillaTypes.ITEM, PlaceboUtil.asList(recipe.getInput().getMatchingStacks()));
 			ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
 		}
 

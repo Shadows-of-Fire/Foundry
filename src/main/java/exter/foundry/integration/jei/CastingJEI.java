@@ -3,14 +3,11 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.ImmutableList;
 
 import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.ICastingRecipe;
-import exter.foundry.api.recipe.matcher.IItemMatcher;
 import exter.foundry.gui.GuiMetalCaster;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
@@ -28,19 +25,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import shadows.placebo.util.PlaceboUtil;
 
 public class CastingJEI {
 
 	static public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation backgroundLocation;
-		@Nonnull
+
 		protected final IDrawableAnimated arrow;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
-		@Nonnull
+
 		private final IDrawable tank_overlay;
 
 		public Category(IJeiHelpers helpers) {
@@ -63,7 +61,7 @@ public class CastingJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -78,7 +76,6 @@ public class CastingJEI {
 			return Foundry.MODID;
 		}
 
-		@Nonnull
 		@Override
 		public String getTitle() {
 			return localizedName;
@@ -89,7 +86,6 @@ public class CastingJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return FoundryJEIConstants.CAST_UID;
@@ -112,7 +108,7 @@ public class CastingJEI {
 	}
 
 	static public class Wrapper implements IRecipeWrapper {
-		@Nonnull
+
 		private final ICastingRecipe recipe;
 
 		public Wrapper(ICastingRecipe recipe) {
@@ -131,10 +127,9 @@ public class CastingJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			IItemMatcher extra = recipe.getInputExtra();
-			List<ItemStack> extra_items = extra != null ? extra.getItems() : Collections.<ItemStack>emptyList();
+			List<ItemStack> item = PlaceboUtil.asList(recipe.getItemInput().getMatchingStacks());
 			ingredients.setInputs(VanillaTypes.FLUID, Collections.singletonList(recipe.getInput()));
-			ingredients.setInputLists(VanillaTypes.ITEM, ImmutableList.of(Collections.singletonList(recipe.getMold()), extra_items));
+			ingredients.setInputLists(VanillaTypes.ITEM, ImmutableList.of(PlaceboUtil.asList(recipe.getMold().getMatchingStacks()), item));
 			ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
 		}
 

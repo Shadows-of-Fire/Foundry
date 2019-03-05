@@ -3,8 +3,6 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.ImmutableList;
 
 import exter.foundry.Foundry;
@@ -34,13 +32,13 @@ public class AtomizerJEI {
 	static public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation backgroundLocation;
-		@Nonnull
+
 		protected final IDrawableAnimated arrow;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
-		@Nonnull
+
 		private final IDrawable tank_overlay;
 
 		public Category(IJeiHelpers helpers) {
@@ -62,7 +60,7 @@ public class AtomizerJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -77,7 +75,6 @@ public class AtomizerJEI {
 			return Foundry.MODID;
 		}
 
-		@Nonnull
 		@Override
 		public String getTitle() {
 			return localizedName;
@@ -88,7 +85,6 @@ public class AtomizerJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return FoundryJEIConstants.ATOM_UID;
@@ -111,10 +107,9 @@ public class AtomizerJEI {
 	static public class Wrapper implements IRecipeWrapper {
 		private static final FluidStack WATER = new FluidStack(FluidRegistry.WATER, 50);
 
-		@Nonnull
 		private final IAtomizerRecipe recipe;
 
-		public Wrapper(@Nonnull IAtomizerRecipe recipe) {
+		public Wrapper(IAtomizerRecipe recipe) {
 			this.recipe = recipe;
 		}
 

@@ -3,8 +3,6 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import exter.foundry.Foundry;
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IInfuserRecipe;
@@ -25,20 +23,20 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import shadows.placebo.util.PlaceboUtil;
 
 public class InfuserJEI {
 
 	static public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation background_location;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
-		@Nonnull
+
 		private final IDrawable tank_overlay;
 
-		@Nonnull
 		protected final IDrawableAnimated arrow;
 
 		public Category(IJeiHelpers helpers) {
@@ -61,7 +59,7 @@ public class InfuserJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -76,7 +74,6 @@ public class InfuserJEI {
 			return Foundry.MODNAME;
 		}
 
-		@Nonnull
 		@Override
 		public String getTitle() {
 			return localizedName;
@@ -87,7 +84,6 @@ public class InfuserJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return FoundryJEIConstants.INF_UID;
@@ -118,7 +114,7 @@ public class InfuserJEI {
 
 		@Override
 		public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-			minecraft.fontRenderer.drawString(recipe.getEnergyNeeded() / TileEntityFoundryPowered.RATIO_FE + " FE", 0, 38, 0);
+			minecraft.fontRenderer.drawString(recipe.getEnergyCost() / TileEntityFoundryPowered.RATIO_FE + " FE", 0, 38, 0);
 		}
 
 		@Override
@@ -129,7 +125,7 @@ public class InfuserJEI {
 		@Override
 		public void getIngredients(IIngredients ingredients) {
 			ingredients.setInput(VanillaTypes.FLUID, recipe.getInputFluid());
-			ingredients.setInputLists(VanillaTypes.ITEM, Collections.singletonList(recipe.getInput().getItems()));
+			ingredients.setInputs(VanillaTypes.ITEM, PlaceboUtil.asList(recipe.getInput().getMatchingStacks()));
 			ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
 		}
 

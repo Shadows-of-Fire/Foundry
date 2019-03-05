@@ -13,26 +13,26 @@ public class MoldRecipeManager {
 
 	private static final NonNullList<IMoldRecipe> RECIPES = NonNullList.create();
 
-	public void addRecipe(IMoldRecipe recipe) {
+	public static void addRecipe(IMoldRecipe recipe) {
 		RECIPES.add(recipe);
 	}
 
-	public void addRecipe(ItemStack result, int width, int height, int[] recipe) {
+	public static void addRecipe(ItemStack result, int width, int height, int[] recipe) {
 		RECIPES.add(new MoldRecipe(result, width, height, recipe));
 	}
 
-	public IMoldRecipe findRecipe(int[] grid) {
+	public static IMoldRecipe findRecipe(int[] grid) {
 		for (IMoldRecipe r : RECIPES) {
 			if (r.matchesRecipe(grid)) { return r; }
 		}
 		return null;
 	}
 
-	public List<IMoldRecipe> getRecipes() {
+	public static List<IMoldRecipe> getRecipes() {
 		return ImmutableList.copyOf(RECIPES);
 	}
 
-	public void removeRecipe(IMoldRecipe recipe) {
+	public static void removeRecipe(IMoldRecipe recipe) {
 		RECIPES.remove(recipe);
 	}
 }

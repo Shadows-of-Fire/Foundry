@@ -3,8 +3,6 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import exter.foundry.Foundry;
 import exter.foundry.api.recipe.ICastingTableRecipe;
 import exter.foundry.block.BlockCastingTable;
@@ -31,9 +29,9 @@ public class CastingTableJEI {
 	public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation backgroundLocation;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
 
 		private final IJeiHelpers helpers;
@@ -54,7 +52,7 @@ public class CastingTableJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -69,7 +67,6 @@ public class CastingTableJEI {
 			return Foundry.MODID;
 		}
 
-		@Nonnull
 		@Override
 		public String getTitle() {
 			return localizedName;
@@ -80,7 +77,6 @@ public class CastingTableJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return UID;

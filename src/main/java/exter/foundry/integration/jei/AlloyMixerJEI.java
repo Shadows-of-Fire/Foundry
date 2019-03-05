@@ -3,8 +3,6 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import exter.foundry.Foundry;
 import exter.foundry.api.recipe.IAlloyMixerRecipe;
 import exter.foundry.gui.GuiAlloyMixer;
@@ -21,17 +19,18 @@ import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
+import shadows.placebo.util.PlaceboUtil;
 
 public class AlloyMixerJEI {
 
 	static public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation backgroundLocation;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
-		@Nonnull
+
 		private final IDrawable tank_overlay;
 
 		public Category(IJeiHelpers helpers) {
@@ -50,7 +49,7 @@ public class AlloyMixerJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -65,7 +64,6 @@ public class AlloyMixerJEI {
 			return Foundry.MODID;
 		}
 
-		@Nonnull
 		@Override
 		public String getTitle() {
 			return localizedName;
@@ -76,7 +74,6 @@ public class AlloyMixerJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return FoundryJEIConstants.AM_UID;
@@ -124,7 +121,7 @@ public class AlloyMixerJEI {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputs(VanillaTypes.FLUID, recipe.getInputs());
+			ingredients.setInputs(VanillaTypes.FLUID, PlaceboUtil.asList(recipe.getInputs()));
 			ingredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
 		}
 

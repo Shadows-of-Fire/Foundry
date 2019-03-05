@@ -15,23 +15,23 @@ public class MeltingRecipeManager {
 
 	private static final NonNullList<IMeltingRecipe> RECIPES = NonNullList.create();
 
-	public void addRecipe(IMeltingRecipe recipe) {
+	public static void addRecipe(IMeltingRecipe recipe) {
 		RECIPES.add(recipe);
 	}
 
-	public void addRecipe(FluidStack output, Ingredient input, int temp, int speed) {
+	public static void addRecipe(FluidStack output, Ingredient input, int temp, int speed) {
 		addRecipe(new MeltingRecipe(output, input, temp, speed));
 	}
 
-	public void addRecipe(FluidStack output, Ingredient input, int temp) {
+	public static void addRecipe(FluidStack output, Ingredient input, int temp) {
 		addRecipe(output, input, temp, 100);
 	}
 
-	public void addRecipe(FluidStack output, Ingredient input) {
+	public static void addRecipe(FluidStack output, Ingredient input) {
 		addRecipe(output, input, output.getFluid().getTemperature());
 	}
 
-	public IMeltingRecipe findRecipe(ItemStack item) {
+	public static IMeltingRecipe findRecipe(ItemStack item) {
 		if (item.isEmpty()) return null;
 		for (IMeltingRecipe r : RECIPES) {
 			if (r.matchesRecipe(item)) return r;
@@ -39,11 +39,11 @@ public class MeltingRecipeManager {
 		return null;
 	}
 
-	public List<IMeltingRecipe> getRecipes() {
+	public static List<IMeltingRecipe> getRecipes() {
 		return ImmutableList.copyOf(RECIPES);
 	}
 
-	public void removeRecipe(IMeltingRecipe recipe) {
+	public static void removeRecipe(IMeltingRecipe recipe) {
 		RECIPES.remove(recipe);
 	}
 }

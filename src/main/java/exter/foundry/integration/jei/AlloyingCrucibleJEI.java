@@ -3,8 +3,6 @@ package exter.foundry.integration.jei;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.ImmutableList;
 
 import exter.foundry.Foundry;
@@ -29,11 +27,11 @@ public class AlloyingCrucibleJEI {
 	static public class Category implements IRecipeCategory<Wrapper> {
 
 		protected final ResourceLocation backgroundLocation;
-		@Nonnull
+
 		private final IDrawable background;
-		@Nonnull
+
 		private final String localizedName;
-		@Nonnull
+
 		private final IDrawable tank_overlay;
 
 		public Category(IJeiHelpers helpers) {
@@ -52,7 +50,7 @@ public class AlloyingCrucibleJEI {
 		}
 
 		@Override
-		@Nonnull
+
 		public IDrawable getBackground() {
 			return background;
 		}
@@ -67,7 +65,6 @@ public class AlloyingCrucibleJEI {
 			return Foundry.MODID;
 		}
 
-		@Nonnull
 		@Override
 		public String getTitle() {
 			return localizedName;
@@ -78,7 +75,6 @@ public class AlloyingCrucibleJEI {
 			return Collections.emptyList();
 		}
 
-		@Nonnull
 		@Override
 		public String getUid() {
 			return FoundryJEIConstants.AC_UID;
