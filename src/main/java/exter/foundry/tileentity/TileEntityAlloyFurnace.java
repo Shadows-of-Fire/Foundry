@@ -1,14 +1,18 @@
 package exter.foundry.tileentity;
 
 import exter.foundry.api.recipe.IAlloyFurnaceRecipe;
-import exter.foundry.integration.ModIntegrationManager;
+import exter.foundry.block.BlockFoundrySidedMachine;
+import exter.foundry.block.FoundryBlocks;
 import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import vazkii.botania.api.item.IExoflameHeatable;
@@ -23,7 +27,9 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements IExofla
 	protected int burnTime = 0;
 	protected int progress = 0;
 	protected int fuelBurnTime = 0;
-	protected RangedWrapper fuelSlot = new RangedWrapper(inv, 3, 4);
+	protected RangedWrapper bottom = new RangedWrapper(inv, SLOT_OUTPUT, SLOT_FUEL + 1);
+	protected RangedWrapper top = new RangedWrapper(inv, SLOT_INPUT_A, SLOT_INPUT_B + 1);
+	protected RangedWrapper sides = new RangedWrapper(inv, SLOT_OUTPUT, SLOT_OUTPUT + 1);
 	protected IAlloyFurnaceRecipe recipe = null;
 	protected boolean reversed = false;
 
@@ -35,6 +41,17 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements IExofla
 			if (oldBurn <= 0) setBurning(true);
 			markDirty();
 		}
+	}
+
+	@Override
+	public IItemHandler getItemHandler(EnumFacing facing) {
+		if (facing == EnumFacing.DOWN) return bottom;
+		if (facing == EnumFacing.UP) return top;
+		return sides;
+	}
+
+	private void setBurning(boolean burn) {
+		world.setBlockState(pos, FoundryBlocks.block_alloy_furnace.getDefaultState().withProperty(BlockFoundrySidedMachine.ACTIVE, burn));
 	}
 
 	@Override
@@ -80,6 +97,19 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements IExofla
 		}
 	}
 
+	private void burnFuel() {
+		ItemStack fuel = this.inv.getStackInSlot(SLOT_FUEL);
+		int oldBurn = burnTime;
+		fuelBurnTime = (burnTime = TileEntityFurnace.getItemBurnTime(fuel));
+		if (burnTime > 0) {
+			Item item = fuel.getItem();
+			ItemStack fCopy = fuel.copy();
+			fuel.shrink(1);
+			if (fuel.isEmpty()) inv.setStackInSlot(SLOT_FUEL, item.getContainerItem(fCopy));
+			if (oldBurn <= 0) setBurning(true);
+		}
+	}
+
 	protected void findRecipe() {
 		ItemStack slotA = inv.getStackInSlot(SLOT_INPUT_A);
 		ItemStack slotB = inv.getStackInSlot(SLOT_INPUT_B);
@@ -90,9 +120,9 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements IExofla
 		}
 
 		if (!slotA.isEmpty() && !slotB.isEmpty()) {
-			recipe = AlloyFurnaceRecipeManager.INSTANCE.findRecipe(slotA, slotB);
+			recipe = AlloyFurnaceRecipeManager.findRecipe(slotA, slotB);
 			if (recipe == null) {
-				recipe = AlloyFurnaceRecipeManager.INSTANCE.findRecipe(slotB, slotA);
+				recipe = AlloyFurnaceRecipeManager.findRecipe(slotB, slotA);
 				reversed = recipe != null;
 			} else reversed = false;
 		}
@@ -107,11 +137,11 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements IExofla
 		if (!canOutput()) return;
 
 		if (!reversed) {
-			inv.getStackInSlot(SLOT_INPUT_A).shrink(recipe.getInputA().getAmount());
-			inv.getStackInSlot(SLOT_INPUT_B).shrink(recipe.getInputB().getAmount());
+			inv.getStackInSlot(SLOT_INPUT_A).shrink(recipe.getInputA().getMatchingStacks()[0].getCount());
+			inv.getStackInSlot(SLOT_INPUT_B).shrink(recipe.getInputB().getMatchingStacks()[0].getCount());
 		} else {
-			inv.getStackInSlot(SLOT_INPUT_B).shrink(recipe.getInputA().getAmount());
-			inv.getStackInSlot(SLOT_INPUT_A).shrink(recipe.getInputB().getAmount());
+			inv.getStackInSlot(SLOT_INPUT_B).shrink(recipe.getInputA().getMatchingStacks()[0].getCount());
+			inv.getStackInSlot(SLOT_INPUT_A).shrink(recipe.getInputB().getMatchingStacks()[0].getCount());
 		}
 
 		if (inv.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
@@ -148,5 +178,34 @@ public class TileEntityAlloyFurnace extends TileEntityFoundry implements IExofla
 		burnTime = tag.getInteger("burnTime");
 		progress = tag.getInteger("progress");
 		fuelBurnTime = tag.getInteger("fuelBurnTime");
+	}
+
+	@Override
+	int getInvSize() {
+		return 4;
 	};
+
+	public int getFuelBurn() {
+		return fuelBurnTime;
+	}
+
+	public int getBurn() {
+		return burnTime;
+	}
+
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setFuelBurn(int fuelBurn) {
+		fuelBurnTime = fuelBurn;
+	}
+
+	public void setBurn(int burn) {
+		burnTime = burn;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
 }

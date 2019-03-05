@@ -30,13 +30,13 @@ public class GuiAlloyFurnace extends GuiFoundry {
 	public static final int BURN_OVERLAY_X = 176;
 	public static final int BURN_OVERLAY_Y = 0;
 
-	private final TileEntityAlloyFurnace te_af;
+	private final TileEntityAlloyFurnace furnace;
 
-	public GuiAlloyFurnace(TileEntityAlloyFurnace af, EntityPlayer player) {
-		super(new ContainerAlloyFurnace(af, player));
+	public GuiAlloyFurnace(TileEntityAlloyFurnace furnace, EntityPlayer player) {
+		super(new ContainerAlloyFurnace(furnace, player));
 		allowUserInput = false;
 		ySize = 166;
-		te_af = af;
+		this.furnace = furnace;
 	}
 
 	@Override
@@ -47,15 +47,15 @@ public class GuiAlloyFurnace extends GuiFoundry {
 		int window_y = (height - ySize) / 2;
 		drawTexturedModalRect(window_x, window_y, 0, 0, xSize, ySize);
 
-		if (te_af.item_burn_time > 0) {
-			int burn = te_af.burn_time * PROGRESS_HEIGHT / te_af.item_burn_time;
+		if (furnace.getFuelBurn() > 0) {
+			int burn = furnace.getBurn() * PROGRESS_HEIGHT / furnace.getFuelBurn();
 
 			if (burn > 0) {
 				drawTexturedModalRect(window_x + BURN_X, window_y + BURN_Y + BURN_HEIGHT - burn, BURN_OVERLAY_X, BURN_OVERLAY_Y + BURN_HEIGHT - burn, BURN_WIDTH, burn);
 			}
 		}
-		if (te_af.progress > 0) {
-			int progress = te_af.progress * PROGRESS_WIDTH / 400;
+		if (furnace.getProgress() > 0) {
+			int progress = furnace.getProgress() * PROGRESS_WIDTH / 400;
 			drawTexturedModalRect(window_x + PROGRESS_X, window_y + PROGRESS_Y, PROGRESS_OVERLAY_X, PROGRESS_OVERLAY_Y, progress, PROGRESS_HEIGHT);
 		}
 	}

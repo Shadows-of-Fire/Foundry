@@ -17,20 +17,11 @@ import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.init.InitRecipes;
+import exter.foundry.integration.IModIntegration;
 import exter.foundry.integration.ModIntegrationManager;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.material.MaterialRegistry;
 import exter.foundry.proxy.FoundryGuiHandler;
-import exter.foundry.recipes.manager.AlloyFurnaceRecipeManager;
-import exter.foundry.recipes.manager.AlloyMixerRecipeManager;
-import exter.foundry.recipes.manager.AlloyingCrucibleRecipeManager;
-import exter.foundry.recipes.manager.AtomizerRecipeManager;
-import exter.foundry.recipes.manager.BurnerHeaterFuelManager;
-import exter.foundry.recipes.manager.CastingRecipeManager;
-import exter.foundry.recipes.manager.CastingTableRecipeManager;
-import exter.foundry.recipes.manager.InfuserRecipeManager;
-import exter.foundry.recipes.manager.MeltingRecipeManager;
-import exter.foundry.recipes.manager.MoldRecipeManager;
 import exter.foundry.sound.FoundrySounds;
 import exter.foundry.tileentity.TileEntityAlloyFurnace;
 import exter.foundry.tileentity.TileEntityAlloyMixer;
@@ -92,33 +83,15 @@ public class Foundry {
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new FoundryRegistry());
 		FoundryConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
-
 		ModIntegrationManager.registerDefaults();
-
 		FoundryAPI.FLUIDS = LiquidMetalRegistry.INSTANCE;
-
-		FoundryAPI.MELTING_MANAGER = MeltingRecipeManager.INSTANCE;
-		FoundryAPI.CASTING_MANAGER = CastingRecipeManager.INSTANCE;
-		FoundryAPI.CASTING_TABLE_MANAGER = CastingTableRecipeManager.INSTANCE;
-		FoundryAPI.ALLOY_MIXER_MANAGER = AlloyMixerRecipeManager.INSTANCE;
-		FoundryAPI.INFUSER_MANAGER = InfuserRecipeManager.INSTANCE;
-		FoundryAPI.ALLOY_FURNACE_MANAGER = AlloyFurnaceRecipeManager.INSTANCE;
-		FoundryAPI.ATOMIZER_MANAGER = AtomizerRecipeManager.INSTANCE;
-		FoundryAPI.MOLD_MANAGER = MoldRecipeManager.INSTANCE;
-		FoundryAPI.ALLOYING_CRUCIBLE_MANAGER = AlloyingCrucibleRecipeManager.INSTANCE;
-
 		FoundryAPI.MATERIALS = MaterialRegistry.INSTANCE;
-		FoundryAPI.BURNER_HEATER_FUEL = BurnerHeaterFuelManager.INSTANCE;
-
 		CapabilityHeatProvider.init();
 		CapabilityFirearmRound.init();
 		FoundrySounds.init();
-
 		FoundryItems.registerItems();
 		FoundryBlocks.registerBlocks();
-
 		FoundryFluids.init();
-
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new FoundryGuiHandler());
 
 		try {
@@ -129,7 +102,7 @@ public class Foundry {
 			e.printStackTrace();
 		}
 
-		ModIntegrationManager.apply(m -> m.preInit());
+		ModIntegrationManager.apply(IModIntegration::preInit);
 	}
 
 	@EventHandler

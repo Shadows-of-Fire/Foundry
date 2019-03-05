@@ -111,4 +111,9 @@ public abstract class TileEntityFoundry extends TileEntity implements ITickable 
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return getItemHandler(facing) != null;
 		return super.hasCapability(cap, facing);
 	}
+
+	@Nullable
+	public ItemStackHandler getInv() {
+		return inv;
+	}
 }
