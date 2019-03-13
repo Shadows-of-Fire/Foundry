@@ -1,9 +1,5 @@
 package exter.foundry.tileentity;
 
-import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
-
 import exter.foundry.api.FoundryAPI;
 import exter.foundry.api.recipe.IAtomizerRecipe;
 import exter.foundry.recipes.manager.AtomizerRecipeManager;
@@ -13,80 +9,28 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.capability.FluidTankPropertiesWrapper;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityMetalAtomizer extends TileEntityFoundryPowered {
-	protected class FluidHandler implements IFluidHandler {
-		private final IFluidTankProperties[] props;
 
-		public FluidHandler() {
-			props = new IFluidTankProperties[getTankCount()];
-			for (int i = 0; i < props.length; i++) {
-				props[i] = new FluidTankPropertiesWrapper(getTank(i));
-			}
-		}
+	public static final int ATOMIZE_TIME = 500000;
+	public static final int ENERGY_REQUIRED = 15000;
+	public static final int INVENTORY_OUTPUT = 0;
+	public static final int INVENTORY_CONTAINER_DRAIN = 1;
+	public static final int INVENTORY_CONTAINER_FILL = 2;
+	public static final int INVENTORY_CONTAINER_WATER_DRAIN = 3;
+	public static final int INVENTORY_CONTAINER_WATER_FILL = 4;
 
-		@Override
-		public FluidStack drain(FluidStack resource, boolean doDrain) {
-			return drainTank(TANK_INPUT, resource.amount, doDrain);
-		}
+	protected final FluidTank inputTank = new FluidTank(FoundryAPI.ATOMIZER_TANK_CAPACITY);
+	protected final FluidTank waterTank = new FluidTank(FoundryAPI.ATOMIZER_WATER_TANK_CAPACITY);
 
-		@Override
-		public FluidStack drain(int maxDrain, boolean doDrain) {
-			return drainTank(TANK_INPUT, maxDrain, doDrain);
-		}
-
-		@Override
-		public int fill(FluidStack resource, boolean doFill) {
-			if (resource != null && resource.getFluid() == FluidRegistry.WATER) { return fillTank(TANK_WATER, resource, doFill); }
-			return fillTank(TANK_INPUT, resource, doFill);
-		}
-
-		@Override
-		public IFluidTankProperties[] getTankProperties() {
-			return props;
-		}
-	}
-
-	static public final int ATOMIZE_TIME = 500000;
-
-	static public final int ENERGY_REQUIRED = 15000;
-
-	static public final int INVENTORY_OUTPUT = 0;
-	static public final int INVENTORY_CONTAINER_DRAIN = 1;
-	static public final int INVENTORY_CONTAINER_FILL = 2;
-	static public final int INVENTORY_CONTAINER_WATER_DRAIN = 3;
-	static public final int INVENTORY_CONTAINER_WATER_FILL = 4;
-
-	static public final int TANK_INPUT = 0;
-	static public final int TANK_WATER = 1;
-
-	static private final Set<Integer> IH_SLOTS_INPUT = ImmutableSet.of();
-	static private final Set<Integer> IH_SLOTS_OUTPUT = ImmutableSet.of(INVENTORY_OUTPUT);
-
-	private final FluidTank[] tanks;
-	private final IFluidHandler fluid_handler;
-	private final ItemHandler item_handler;
-
-	IAtomizerRecipe current_recipe;
-
-	private int progress;
+	protected IAtomizerRecipe recipe;
+	protected int progress;
 
 	private final FluidStack water_required = new FluidStack(FluidRegistry.WATER, 50);
 
 	public TileEntityMetalAtomizer() {
-		super();
-
-		tanks = new FluidTank[2];
-		tanks[TANK_INPUT] = new FluidTank(FoundryAPI.ATOMIZER_TANK_CAPACITY);
-		tanks[TANK_WATER] = new FluidTank(FoundryAPI.ATOMIZER_WATER_TANK_CAPACITY);
-		fluid_handler = new FluidHandler();
-		item_handler = new ItemHandler(getSizeInventory(), IH_SLOTS_INPUT, IH_SLOTS_OUTPUT);
-
-		progress = -1;
 
 		current_recipe = null;
 

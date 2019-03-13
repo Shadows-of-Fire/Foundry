@@ -83,7 +83,7 @@ public class TankRenderer extends TileEntitySpecialRenderer<TileEntityRefractory
 
 	@Override
 	public void render(TileEntityRefractoryTankBasic te, double x, double y, double z, float partialTicks, int destroyStage, float a) {
-		FluidStack fluid = te.getTank(0).getFluid();
+		FluidStack fluid = te.getTank().getFluid();
 		if (fluid != null && fluid.amount > 50) {
 			GL11.glPushMatrix();
 			GlStateManager.disableLighting();
@@ -94,7 +94,7 @@ public class TankRenderer extends TileEntitySpecialRenderer<TileEntityRefractory
 			GlStateManager.resetColor();
 			GL11.glTranslatef((float) x, (float) y, (float) z);
 			TextureAtlasSprite texture = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill(fluid).toString());
-			double fluid_z = (double) fluid.amount / te.getTank(0).getCapacity() * 11.99 + 2;
+			double fluid_z = (double) fluid.amount / te.getTank().getCapacity() * 11.99 + 2;
 
 			int color = fluid.getFluid().getColor();
 			int light = te.getWorld().getCombinedLight(te.getPos(), fluid.getFluid().getLuminosity());
