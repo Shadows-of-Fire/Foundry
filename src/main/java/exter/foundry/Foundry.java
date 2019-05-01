@@ -13,7 +13,6 @@ import exter.foundry.block.FoundryBlocks;
 import exter.foundry.capability.CapabilityFirearmRound;
 import exter.foundry.capability.CapabilityHeatProvider;
 import exter.foundry.config.FoundryConfig;
-import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.fluid.FoundryFluids;
 import exter.foundry.fluid.LiquidMetalRegistry;
 import exter.foundry.init.InitRecipes;
@@ -33,34 +32,8 @@ import exter.foundry.recipes.manager.InfuserRecipeManager;
 import exter.foundry.recipes.manager.MeltingRecipeManager;
 import exter.foundry.recipes.manager.MoldRecipeManager;
 import exter.foundry.sound.FoundrySounds;
-import exter.foundry.tileentity.TileEntityAlloyFurnace;
-import exter.foundry.tileentity.TileEntityAlloyMixer;
-import exter.foundry.tileentity.TileEntityAlloyingCrucible;
-import exter.foundry.tileentity.TileEntityBurnerHeater;
-import exter.foundry.tileentity.TileEntityCastingTableBlock;
-import exter.foundry.tileentity.TileEntityCastingTableIngot;
-import exter.foundry.tileentity.TileEntityCastingTablePlate;
-import exter.foundry.tileentity.TileEntityCastingTableRod;
 import exter.foundry.tileentity.TileEntityCokeOven;
-import exter.foundry.tileentity.TileEntityInductionHeater;
-import exter.foundry.tileentity.TileEntityMaterialRouter;
-import exter.foundry.tileentity.TileEntityMeltingCrucibleAdvanced;
-import exter.foundry.tileentity.TileEntityMeltingCrucibleBasic;
-import exter.foundry.tileentity.TileEntityMeltingCrucibleStandard;
-import exter.foundry.tileentity.TileEntityMetalAtomizer;
-import exter.foundry.tileentity.TileEntityMetalCaster;
-import exter.foundry.tileentity.TileEntityMetalInfuser;
-import exter.foundry.tileentity.TileEntityMoldStation;
-import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import exter.foundry.tileentity.TileEntityRefractorySpout;
-import exter.foundry.tileentity.TileEntityRefractoryTankAdvanced;
-import exter.foundry.tileentity.TileEntityRefractoryTankBasic;
-import exter.foundry.tileentity.TileEntityRefractoryTankStandard;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -73,7 +46,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import shadows.placebo.registry.RegistryInformation;
@@ -83,7 +55,7 @@ import shadows.placebo.util.RecipeHelper;
 public class Foundry {
 	public static final String MODID = "foundry";
 	public static final String MODNAME = "Foundry";
-	public static final String MODVERSION = "3.3.5";
+	public static final String MODVERSION = "3.3.6";
 
 	@SidedProxy(clientSide = "exter.foundry.proxy.ClientFoundryProxy", serverSide = "exter.foundry.proxy.CommonFoundryProxy")
 	public static CommonFoundryProxy proxy;
@@ -154,37 +126,7 @@ public class Foundry {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		InitRecipes.init();
-
-		GameRegistry.registerTileEntity(TileEntityMeltingCrucibleBasic.class, reloc("melt_crucible_basic"));
-		GameRegistry.registerTileEntity(TileEntityMeltingCrucibleStandard.class, reloc("melt_crucible_standard"));
-		GameRegistry.registerTileEntity(TileEntityMetalCaster.class, reloc("metal_caster"));
-		GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, reloc("alloy_mixer"));
-		GameRegistry.registerTileEntity(TileEntityMetalInfuser.class, reloc("metal_infuser"));
-		GameRegistry.registerTileEntity(TileEntityAlloyFurnace.class, reloc("alloy_furnace"));
-		GameRegistry.registerTileEntity(TileEntityMoldStation.class, reloc("mold_station"));
-		GameRegistry.registerTileEntity(TileEntityMaterialRouter.class, reloc("material_router"));
-		GameRegistry.registerTileEntity(TileEntityRefractoryHopper.class, reloc("refractory_hopper"));
-		GameRegistry.registerTileEntity(TileEntityMetalAtomizer.class, reloc("atomizer"));
-		GameRegistry.registerTileEntity(TileEntityInductionHeater.class, reloc("induction_heater"));
-		GameRegistry.registerTileEntity(TileEntityBurnerHeater.class, reloc("burner_heater"));
-		GameRegistry.registerTileEntity(TileEntityCastingTableIngot.class, reloc("cast_table_ingot"));
-		GameRegistry.registerTileEntity(TileEntityCastingTablePlate.class, reloc("cast_table_plate"));
-		GameRegistry.registerTileEntity(TileEntityCastingTableRod.class, reloc("cast_table_rod"));
-		GameRegistry.registerTileEntity(TileEntityCastingTableBlock.class, reloc("cast_table_block"));
-		GameRegistry.registerTileEntity(TileEntityRefractorySpout.class, reloc("refractory_spout"));
-		GameRegistry.registerTileEntity(TileEntityMeltingCrucibleAdvanced.class, reloc("melt_crucible_advanced"));
-		GameRegistry.registerTileEntity(TileEntityRefractoryTankBasic.class, reloc("tank_basic"));
-		GameRegistry.registerTileEntity(TileEntityRefractoryTankStandard.class, reloc("tank_standard"));
-		GameRegistry.registerTileEntity(TileEntityRefractoryTankAdvanced.class, reloc("tank_advanced"));
-		GameRegistry.registerTileEntity(TileEntityAlloyingCrucible.class, reloc("alloy_crucible"));
 		if (FoundryConfig.block_cokeoven) GameRegistry.registerTileEntity(TileEntityCokeOven.class, reloc("coke_oven"));
-
-		EntityRegistry.registerModEntity(new ResourceLocation("foundry", "gun_skeleton"), EntitySkeletonGun.class, "foundry.gunSkeleton", 0, this, 80, 1, true);
-		EntityRegistry.registerEgg(new ResourceLocation("foundry", "gun_skeleton"), 0xd3d3d3, 0x808080);
-		LootTableList.register(new ResourceLocation("foundry", "gun_skeleton"));
-
-		EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.MONSTER, BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS).toArray(new Biome[0]));
-
 		ModIntegrationManager.apply(m -> m.init());
 		proxy.init();
 	}
@@ -197,7 +139,7 @@ public class Foundry {
 		ModIntegrationManager.apply(m -> m.postInit());
 	}
 
-	private static ResourceLocation reloc(String s) {
+	static ResourceLocation reloc(String s) {
 		return new ResourceLocation(MODID, s);
 	}
 }

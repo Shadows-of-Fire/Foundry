@@ -12,12 +12,12 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.12.2-3.3.5"
+version = "1.12.2-3.3.6"
 group = "exter.foundry"
 archivesBaseName = "Foundry"
 
 minecraft {
-	version = "1.12.2-14.23.5.2768"
+	version = "1.12.2-14.23.5.2836"
 	runDir = "run"
 	mappings = "stable_39"
 	makeObfSourceJar = false
@@ -25,7 +25,7 @@ minecraft {
 
 repositories {
 	maven {
-		url "http://dvs1.progwml6.com/files/maven"
+		url "https://dvs1.progwml6.com/files/maven"
 	}
 	maven {
 		url "http://tehnut.info/maven"
@@ -41,7 +41,7 @@ repositories {
 dependencies {
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
     deobfCompile "mezz.jei:jei_1.12.2:+"
-	deobfCompile "mcp.mobius.waila:Hwyla:+"
+	deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
 	deobfCompile "slimeknights:TConstruct:1.12.2-+"
 	deobfCompile "slimeknights.mantle:Mantle:1.12-+"
 	//deobfCompile "com.enderio:EnderIO:1.12.2-+"
