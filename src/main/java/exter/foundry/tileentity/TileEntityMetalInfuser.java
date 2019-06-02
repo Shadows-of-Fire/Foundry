@@ -60,9 +60,10 @@ public class TileEntityMetalInfuser extends TileEntityFoundryPowered {
 	}
 
 	private void checkCurrentRecipe() {
-		if (current_recipe == null) {
+		if (getTank(TANK_INPUT).getFluid() == null || getStackInSlot(INVENTORY_SUBSTANCE_INPUT).isEmpty() || current_recipe == null) {
 			progress = 0;
 			extract_energy = 1;
+			current_recipe = null;
 			return;
 		}
 
